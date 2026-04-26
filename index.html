@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Europa · Maio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f1ea;--surface:#fff;--sidebar:#0d0d14;--sid-txt:#b8b0a4;--txt1:#1a1712;--txt2:#5c564f;--muted:#9b948c;--border:#e5ded5;--gold:#c49a28;--gold-l:#f0dfa0;--r:12px;--sh:0 2px 20px rgba(0,0,0,.07);--shl:0 10px 50px rgba(0,0,0,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt1);display:flex;min-height:100vh;font-size:14.5px;line-height:1.6}
+
+/* ── SIDEBAR ─────────────────────────── */
+.sb{width:272px;min-width:272px;background:var(--sidebar);height:100vh;position:sticky;top:0;overflow-y:auto;display:flex;flex-direction:column;z-index:200}
+.sb-head{padding:28px 22px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#fff;letter-spacing:.02em;line-height:1.2}
+.sb-sub{font-size:11px;color:var(--sid-txt);margin-top:5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-nav{padding:10px 0;flex:1}
+.nav-item{padding:10px 22px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;gap:11px;transition:background .18s}
+.nav-item:hover{background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(255,255,255,.09)}
+.nav-flag{font-size:18px;flex-shrink:0}
+.nav-info{flex:1;min-width:0}
+.nav-name{font-size:12.5px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-dates{font-size:11px;color:var(--sid-txt);margin-top:1px}
+.sb-toggle{padding:16px 22px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:6px}
+.tog{flex:1;padding:8px 6px;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.09);color:var(--sid-txt);letter-spacing:.03em}
+.tog.on{background:var(--gold);color:#fff}
+
+/* ── MAIN ────────────────────────────── */
+.main{flex:1;overflow-y:auto;min-width:0}
+
+/* ── LIST VIEW ───────────────────────── */
+.lv{max-width:840px;margin:0 auto;padding:48px 38px}
+.dest-block{margin-bottom:72px}
+
+.dest-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:24px;padding-bottom:22px;border-bottom:2px solid var(--border)}
+.dest-bar{width:4px;border-radius:2px;align-self:stretch;flex-shrink:0;min-height:70px}
+.dest-flag{font-size:38px;line-height:1}
+.dest-info{flex:1}
+.dest-label{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.dest-name{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.1}
+.dest-dates{font-size:12.5px;color:var(--txt2);margin-top:5px}
+.dest-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--border);color:var(--txt2);font-weight:500}
+
+/* culture panel */
+.cult-toggle{display:flex;align-items:center;gap:9px;padding:13px 16px;background:var(--surface);border-radius:var(--r);cursor:pointer;border:1px solid var(--border);margin-bottom:20px;transition:box-shadow .2s;user-select:none}
+.cult-toggle:hover{box-shadow:var(--sh)}
+.cult-toggle-txt{font-size:12.5px;font-weight:500;color:var(--txt2);flex:1}
+.cult-arr{font-size:11px;color:var(--muted);transition:transform .25s}
+.cult-panel{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:20px;margin-top:-16px;animation:fadeIn .25s ease}
+.cult-panel.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.cult-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cult-sec h4{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.cult-sec ul{list-style:none}
+.cult-sec ul li{font-size:12.5px;color:var(--txt2);line-height:1.55;padding-bottom:5px;border-bottom:1px solid var(--border);margin-bottom:5px}
+.cult-sec ul li:last-child{border-bottom:none;margin-bottom:0}
+.cult-sec ul li::before{content:'·';color:var(--gold);font-weight:bold;margin-right:7px}
+
+/* day block */
+.day-block{margin-bottom:36px}
+.day-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.day-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+.day-info .day-date{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600}
+.day-info .day-theme{font-size:11.5px;color:var(--muted);margin-top:1px}
+
+/* timeline */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:5px;top:14px;bottom:14px;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:12px}
+.tl-dot{position:absolute;left:-23px;top:14px;width:12px;height:12px;border-radius:50%;border:2.5px solid var(--bg);z-index:1}
+.ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:14px}
+.ac:hover{box-shadow:var(--sh);border-color:#cdc8c0;transform:translateY(-1px)}
+.ac-time{font-size:11.5px;font-weight:600;color:var(--muted);min-width:44px;padding-top:2px;letter-spacing:.04em;flex-shrink:0}
+.ac-icon{font-size:19px;flex-shrink:0}
+.ac-cnt{flex:1;min-width:0}
+.ac-name{font-size:14.5px;font-weight:500;line-height:1.3}
+.ac-dur{font-size:11.5px;color:var(--muted);margin-top:2px}
+.ac-tp{font-size:11.5px;color:var(--txt2);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── CALENDAR VIEW ───────────────────── */
+.cv{max-width:980px;margin:0 auto;padding:48px 38px}
+.cal-head{text-align:center;margin-bottom:36px}
+.cal-month{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300}
+.cal-year{font-size:13px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;padding:14px 18px;background:var(--surface);border-radius:var(--r);border:1px solid var(--border)}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--txt2)}
+.leg-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-wd{text-align:center;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:6px 0}
+.cal-day{min-height:95px;border-radius:9px;border:1px solid var(--border);background:var(--surface);padding:9px;transition:all .2s}
+.cal-day.empty{background:transparent;border-color:transparent}
+.cal-day.live{cursor:pointer}
+.cal-day.live:hover{box-shadow:var(--sh);transform:translateY(-2px)}
+.cal-dn{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+.cal-day.live .cal-dn{color:var(--txt1)}
+.cal-city{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.cal-ev{font-size:9.5px;font-weight:500;padding:2px 6px;border-radius:4px;margin-bottom:2px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ── MODAL ───────────────────────────── */
+.mo{position:fixed;inset:0;background:rgba(8,8,18,.72);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(5px)}
+.mo.open{opacity:1;pointer-events:all}
+.mo-box{background:var(--surface);border-radius:18px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;transform:translateY(18px) scale(.98);transition:transform .28s;box-shadow:var(--shl)}
+.mo.open .mo-box{transform:none}
+.mo-head{padding:26px 26px 0;display:flex;gap:14px;align-items:flex-start}
+.mo-ico{font-size:34px;flex-shrink:0}
+.mo-ttl-g{flex:1}
+.mo-when{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.08em;margin-bottom:3px}
+.mo-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.2}
+.mo-close{width:30px;height:30px;border-radius:50%;border:none;background:var(--bg);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.mo-close:hover{background:var(--border);color:var(--txt1)}
+.mo-body{padding:18px 26px 26px}
+.mo-transport{background:#eef5ff;border:1px solid #c0d8f5;border-radius:9px;padding:13px 15px;margin-bottom:18px;display:flex;gap:11px;align-items:flex-start}
+.mo-tp-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#3e6b9e;margin-bottom:3px}
+.mo-tp-txt{font-size:12.5px;color:#254e7a;line-height:1.6}
+.mo-sec{margin-bottom:16px}
+.mo-sec-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+.mo-sec-txt{font-size:13px;color:var(--txt2);line-height:1.7}
+.mo-tips{background:#fffbee;border:1px solid #ecdfa0;border-radius:9px;padding:13px 15px;display:flex;gap:10px;align-items:flex-start}
+.mo-tips-in .lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#8a6900;margin-bottom:3px}
+.mo-tips-in .txt{font-size:12.5px;color:#5a4500;line-height:1.6}
+.mo-cur{background:#f6f0ff;border:1px solid #d4c0f0;border-radius:9px;padding:13px 15px;display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.mo-cur-in .lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#5030a0;margin-bottom:3px}
+.mo-cur-in .txt{font-size:12.5px;color:#351e80;line-height:1.6}
+.mo-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted)}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav class="sb" id="sb">
+  <div class="sb-head">
+    <div class="sb-title">Europa · Maio</div>
+    <div class="sb-sub">Roteiro 2026</div>
+  </div>
+  <div class="sb-nav" id="sbNav"></div>
+  <div class="sb-toggle">
+    <button class="tog on" id="btnL" onclick="setView('list')">☰ Lista</button>
+    <button class="tog" id="btnC" onclick="setView('cal')">📅 Calendário</button>
+  </div>
+</nav>
+
+<main class="main" id="main"></main>
+
+<div class="mo" id="mo" onclick="closeMoOv(event)">
+  <div class="mo-box">
+    <div class="mo-head">
+      <div class="mo-ico" id="moIco"></div>
+      <div class="mo-ttl-g">
+        <div class="mo-when" id="moWhen"></div>
+        <div class="mo-ttl" id="moTtl"></div>
+      </div>
+      <button class="mo-close" onclick="closeMo()">✕</button>
+    </div>
+    <div class="mo-body" id="moBody"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const D = [
+ {
+  id:'madrid1',name:'Madrid',sub:'Parte 1',flag:'🇪🇸',country:'Espanha',color:'#C60B1E',
+  lang:'Espanhol',card:'Tarjeta Multi (€12,20 / 10 viagens)',dates:'01 – 03 Mai',
+  greetings:['¡Hola! — Olá','Gracias — Obrigado(a)','Por favor — Por favor','Buenos días / tardes — Bom dia / boa tarde','¿Cuánto cuesta? — Quanto custa?','Perdón — Com licença','La cuenta, por favor — A conta, por favor'],
+  customs:['Jantar tardio: os madrilenos jantam entre 21h e 23h — restaurantes antes das 20h ficam vazios.','Sesta comercial: muitos comércios fecham entre 14h e 17h, principalmente fora das áreas turísticas.','Tapas são cultura: peça várias porções pequenas para compartilhar — é como se come corretamente na Espanha.','Gorjeta: 5-10% é bem-vinda mas não obrigatória.','Cumprimento social: dois beijos nas bochechas (começando pelo esquerdo) ao ser apresentado a alguém.','Volume alto: os espanhóis conversam animadamente — não se preocupe, não estão brigando!'],
+  gastronomy:['Cocido Madrileño — Cozido de grão-de-bico com legumes e carnes variadas; o prato mais tradicional da cidade','Bocadillo de Calamares — Pão francês com anéis de lula empanada e frita; o sanduíche mais famoso de Madri','Churros con Chocolate — Palitos fritos mergulhados em chocolate espesso; o café da manhã mais icônico','Patatas Bravas — Batatas fritas com molho picante (brava) e às vezes aioli','Tortilla Española — Omelete de batatas e cebola, servida em temperatura ambiente','Jamón Ibérico — Presunto curado de porco ibérico, uma das iguarias mais refinadas do mundo'],
+  days:[
+   {date:'2026-05-01',dow:'Sexta-feira',label:'Dia 1',theme:'O Coração de Madri',att:[
+    {id:'m1-ci',t:'14:00',name:'Check-in — Cats Hostel Madrid',type:'accom',dur:'1h',icon:'🏨',
+     tp:'Do aeroporto Barajas: Metrô Linha 8 (rosa) → Nuevos Ministerios → baldeação Linha 10 (azul) → estação Tribunal. ~50 min, €5,00 (tarifa especial aeroporto). Compre já a Tarjeta Multi (€12,20 / 10 viagens) nas máquinas do aeroporto.',
+     desc:'O Cats Hostel é consistentemente eleito um dos melhores hostels da Europa. Localizado no boêmio bairro de Malasaña, tem bar próprio, atmosfera incrível e organiza tours noturnos gratuitos pela cidade.',
+     tips:'Pergunte ao staff sobre os tours gratuitos noturnos — são excelentes. Guarde as malas e saia leve. Atenção: 1º de Maio é feriado nacional (Día del Trabajo) — museus fechados, mas pontos ao ar livre são perfeitos.',
+     cur:''},
+    {id:'m1-sol',t:'15:00',name:'Puerta del Sol',type:'att',dur:'30min',icon:'☀️',
+     tp:'A pé do hostel (8 min pela Calle Hortaleza em direção sul)',
+     desc:'O marco zero de toda a Espanha: no chão, uma placa indica o Kilómetro Cero, de onde são medidas todas as estradas espanholas. Aqui ficam a estátua do Oso y el Madroño (urso + morangueiro, símbolo de Madri) e o Relógio Real — cujas badaladas de Réveillon são transmitidas para todo o país enquanto a multidão engole as 12 uvas da sorte.',
+     tips:'Tire foto com a estátua do urso — é tradição! A praça está sempre animada com músicos e artistas de rua.',
+     cur:'No Réveillon, milhares de pessoas se reúnem aqui para comer 12 uvas ao ritmo das 12 badaladas — tradição desde 1895. O nome "Puerta del Sol" vem de um antigo portão da cidade medieval com um sol decorativo.'},
+    {id:'m1-pm',t:'15:30',name:'Plaza Mayor',type:'att',dur:'45min',icon:'🏛️',
+     tp:'A pé da Puerta del Sol (5 min pela Calle Mayor, sentido oeste)',
+     desc:'Uma das mais imponentes praças barrocas da Europa, construída entre 1617 e 1619. Tem 129m × 94m, cercada por 237 janelas e 9 arcos de entrada. No centro, a estátua equestre de Felipe III (1616). Já foi palco de coroações, touradas, autos-de-fé da Inquisição e execuções públicas. As paredes têm pinturas murais do século XVI.',
+     tips:'Entre pelo Arco de Cuchilleros (sudoeste) — o mais bonito. Logo abaixo, o Mesón del Champignon serve cogumelos recheados de alho que são imperdíveis (€8-12).',
+     cur:'Durante a Inquisição, os moradores alugavam suas janelas e varandas como "camarotes VIP" para assistir às execuções. Os 237 apartamentos ao redor ainda são residências privadas.'},
+    {id:'m1-sm',t:'16:30',name:'Mercado de San Miguel',type:'food',dur:'1h30',icon:'🥘',
+     tp:'A pé da Plaza Mayor (3 min — esquina noroeste, saindo pelo Arco de Cuchilleros e virando à direita)',
+     desc:'Inaugurado em 1916, este mercado coberto de ferro forjado tem mais de 30 barracas de tapas gourmet e vinhos. É um espaço de degustação (não de compras): cada barraca vende porções para você experimentar o máximo de sabores — gambas al ajillo, jamón ibérico, tortilla española, ostras, queijos, sangria...',
+     tips:'Orçamento: €15-25/pessoa para degustar bem. Peça uma fatia de Jamón Ibérico 5J e uma copa de Rioja. Evite os picos das 13h-15h e 19h-21h para mais tranquilidade.',
+     cur:'O mercado recebe mais de 4 milhões de visitantes por ano. A estrutura metálica de ferro fundido foi completamente restaurada em 2009.'},
+    {id:'m1-deb',t:'18:30',name:'Templo de Debod',type:'att',dur:'1h',icon:'🏺',
+     tp:'A pé do Mercado (20 min pela Calle Mayor → Calle de Bailén → Parque del Oeste). Alternativa: Metrô Linha 3 de Sol até Plaza de España (2 paradas, €1,50), depois 7 min a pé.',
+     desc:'Um templo egípcio autêntico com mais de 2.200 anos em pleno coração de Madri! Construído no século II a.C. em homenagem a Amon e Ísis, foi doado pelo Egito à Espanha em 1968 como agradecimento pela ajuda durante a construção da Barragem de Assuã. Desmontado pedra por pedra no Egito e reconstruído no Parque del Oeste.',
+     tips:'Chegue 30-40 min antes do pôr do sol (~20h45 em maio). O reflexo no espelho d\'água ao entardecer, com a silhueta do Palácio Real ao fundo, é a foto mais icônica de Madri.',
+     cur:'São mais de 1.300 blocos de pedra numerados, desmontados no Egito e remontados em Madri. É um dos únicos templos egípcios com estrutura completa fora do continente africano.'}
+   ]},
+   {date:'2026-05-02',dow:'Sábado',label:'Dia 2',theme:'Realeza, Arte e Tapas',att:[
+    {id:'m1-pr',t:'09:30',name:'Palácio Real de Madrid',type:'att',dur:'2h',icon:'👑',
+     tp:'A pé do hostel (15 min: Calle Fuencarral → Gran Vía → Calle Bailén). Ou Metrô Linha 3 até Ópera (€1,50), 5 min a pé.',
+     desc:'O maior palácio real da Europa Ocidental em área útil: 135.000 m², 3.418 cômodos, 870 janelas e 240 m de fachada. Construído entre 1738 e 1755 para Felipe V. Hoje é residência oficial da Família Real (mas o Rei vive no Palácio de La Zarzuela). O interior é um espetáculo: afrescos de Tiepolo, a Armería Real com armaduras medievais, 700 relógios históricos todos em funcionamento e os 5 violinos Stradivarius — a maior coleção do mundo.',
+     tips:'Compre online (€13) para evitar filas de 1h+. Vá antes das 10h. Os Jardins da Plaza de Oriente ao lado são gratuitos e perfeitos.',
+     cur:'O relógio dourado na Sala do Gasparini foi presente de Napoleão. Um relojoeiro real sincroniza manualmente todos os 700 relógios toda semana.'},
+    {id:'m1-al',t:'11:45',name:'Catedral de la Almudena',type:'att',dur:'45min',icon:'⛪',
+     tp:'A pé do Palácio Real (2 min — fica literalmente em frente à fachada principal)',
+     desc:'A única catedral da Europa com um palácio real em frente. Construção de 110 anos (1879-1993) por falta de financiamento. Exterior neoclássico, interior moderno e surpreendente com vitrais contemporâneos em azul, amarelo e verde vibrantes — diferente de qualquer outra catedral europeia. Consagrada pelo Papa João Paulo II em 1993.',
+     tips:'Entrada gratuita. Museu + cúpula: €6. Subir à cúpula vale pela vista panorâmica. O casamento do Príncipe Felipe VI com Letizia foi celebrado aqui em 2004.',
+     cur:'Almudena vem do árabe "al-mudayna" (a cidadela pequena) — nome da fortaleza árabe que existia neste local antes da Reconquista cristã.'},
+    {id:'m1-cb',t:'13:00',name:'Almoço em La Latina — Calle de la Cava Baja',type:'food',dur:'1h30',icon:'🍷',
+     tp:'Metrô Linha 5 (verde) de Ópera até La Latina (2 paradas, €1,50). Ou caminhada de 25 min pelo Viaducto de Segovia.',
+     desc:'A rua mais famosa de Madri para tapas tradicionais de qualidade. La Latina é o bairro mais antigo da cidade (ruas medievais intactas) e onde os madrilenos de verdade se reúnem. Tabernas históricas, algumas com séculos de existência. Opções: Taberna El Tempranillo (vinhos), Casa Lucas (tapas criativas), La Musa de La Latina.',
+     tips:'Em alguns bares de La Latina, ao pedir vinho ou cerveja, a tapa vem grátis — tradição que sobrevive aqui! Após almoçar, explore: Calle de la Morería e a Plaza de la Paja.',
+     cur:'La Latina foi o epicentro da Movida Madrileña dos anos 80 — explosão cultural após a morte de Franco. Pedro Almodóvar retratou muito essa era em seus filmes.'},
+    {id:'m1-pra',t:'15:00',name:'Museu do Prado',type:'att',dur:'2h30',icon:'🖼️',
+     tp:'Metrô Linha 1 de La Latina até Antón Martín (3 paradas, €1,50), 8 min a pé. Ou até Atocha Renfe, 5 min a pé.',
+     desc:'Um dos maiores museus de arte do mundo. Fundado em 1819, com mais de 8.000 pinturas. Obras imperdíveis: "Las Meninas" de Velázquez (provavelmente a mais analisada da história), "El jardín de las Delicias" de Hieronymus Bosch (tríptico visionário e perturbador do séc. XV), as "Pinturas Negras" de Goya (criadas na própria casa, com saúde mental deteriorada) e obras de Tiziano, Rubens e El Greco.',
+     tips:'Das 18h às 20h: entrada GRATUITA (mas fila enorme — ~45 min de espera). Compre online: €15. Roteiro "Obras Maestras" gratuito na entrada. Salas essenciais: 12 (Las Meninas), 56A-57A (Goya), 29 (Bosch).',
+     cur:'"Las Meninas" foi declarada por Salvador Dalí como "a melhor pintura de todos os tempos". Picasso ficou tão fascinado que pintou 58 releituras. O quadro retrata a infanta Margarida, as damas de honra e o próprio Velázquez — mas o que ele está pintando é o enigma.'}
+   ]},
+   {date:'2026-05-03',dow:'Domingo',label:'Dia 3',theme:'Café em Malasaña · Partida para Londres',att:[
+    {id:'m1-mal',t:'09:00',name:'Café da manhã em Malasaña',type:'food',dur:'1h',icon:'☕',
+     tp:'A pé do hostel (5-10 min — o hostel já fica no bairro)',
+     desc:'Malasaña é o bairro mais boêmio e criativo de Madri. Lar da Movida Madrileña dos anos 80, hoje é mix de cafés vintage, lojas de vinil, brechós e arte de rua. O Café Comercial (Glorieta de Bilbao, fundado em 1887) é um dos mais antigos de Madri.',
+     tips:'Peça "Un café cortado y una tosta con tomate y jamón" — café com leite e torrada com tomate e presunto. O café da manhã espanhol clássico.',
+     cur:'La Movida Madrileña foi um dos movimentos contraculturais mais importantes da Europa — arte, música e liberdade após 40 anos de ditadura franquista. Mecano, Alaska e Pedro Almodóvar são filhos dessa época.'},
+    {id:'m1-fly',t:'11:00',name:'Partida · Voo para Londres',type:'transp',dur:'4h total',icon:'✈️',
+     tp:'Hostel → Aeroporto: Metrô Linha 10 de Tribunal → Nuevos Ministerios → Linha 8 (rosa) → Aeropuerto T1-T2-T3. ~50 min, €5,00 (tarifa especial). Saia às 11h. Chegue 2h antes do voo.',
+     desc:'Partida do Aeroporto Adolfo Suárez Madrid-Barajas (MAD), maior da Espanha com 4 terminais. O Terminal 4, projetado por Richard Rogers (mesmo do Centre Pompidou de Paris), é uma obra arquitetônica por si só.',
+     tips:'Compre euros extras se precisar, mas em Londres a moeda é a Libra Esterlina (£). £1 ≈ R$6-7. Use seu cartão de débito sem tarifas internacionais para sacar nos ATMs londrinos.',
+     cur:'O trajeto Madrid-Londres leva ~2h15 de avião. Portugal e UK usam GMT — Londres estará 1h atrás de Madrid no horário de verão europeu.'}
+   ]}
+  ]
+ },
+ {
+  id:'london',name:'Londres',sub:'',flag:'🇬🇧',country:'Reino Unido',color:'#012169',
+  lang:'Inglês',card:'Contactless bancário (cap £8-10/dia)',dates:'03 – 06 Mai',
+  greetings:['Hello / Hi — Olá','Cheers! — Obrigado / Saúde','Excuse me — Com licença','Please — Por favor','How much is it? — Quanto custa?','Lovely! — Que bom! (muito usado)','Cheers, mate — Valeu, amigo'],
+  customs:['Fila (queue) é sagrada: jamais fure uma fila em Londres — é um insulto social grave.','Pontualidade: chegue no horário ou antes. Atraso é considerado desrespeito.','Trânsito à esquerda: ao atravessar ruas, olhe PRIMEIRO para a direita.','Pub culture: o coração da vida social britânica. Pede-se no balcão — garçom só em poucos lugares.','Understatement britânico: "Not bad" pode significar "excelente". "Quite interesting" pode ser crítica velada.','Gorjeta: 10-12,5% esperado em restaurantes. Muitos já adicionam à conta.'],
+  gastronomy:['Fish and Chips — Peixe empanado frito com batatas grossas; o prato nacional mais icônico','Sunday Roast — Assado de domingo com carne, batatas, Yorkshire pudding e gravy; tradição familiar','Full English Breakfast — Ovos, bacon, salsichas, feijão, cogumelos e torrada; o café da manhã clássico','Pie and Mash — Torta de carne com purê; comida popular londrina histórica','Afternoon Tea — Scones com clotted cream e geleia; a tradição britânica das 15h-17h','Tikka Masala — O curry indo-britânico; considerado por muitos o prato nacional "moderno"'],
+  days:[
+   {date:'2026-05-03',dow:'Domingo',label:'Dia 3',theme:'Chegada em Londres · Museu e Harrods',att:[
+    {id:'lo-ci',t:'16:00',name:'Check-in — Anwar House (Earl\'s Court)',type:'accom',dur:'45min',icon:'🏨',
+     tp:'Do aeroporto Heathrow (LHR): Piccadilly Line (metrô roxo) diretamente até Earl\'s Court. ~50 min. Custo: ~£5,50. Use seu cartão bancário com contactless na catraca — mais barato que Oyster e sem taxa de ativação.',
+     desc:'Earl\'s Court é um bairro residencial e tranquilo do oeste de Londres, conectado ao centro pela Piccadilly e District Lines. O Anwar House tem localização estratégica: em 10 min a pé você chega ao Natural History Museum.',
+     tips:'Configure seu cartão bancário para contactless — será seu "bilhete de metrô". O cap diário de ~£8-10 garante que você nunca paga mais que isso por dia, não importa quantas viagens fizer. NUNCA compre bilhetes de papel — são muito mais caros.',
+     cur:'Earl\'s Court foi local de shows históricos do Queen nos anos 80. Freddie Mercury viveu por anos em Kensington, a 5 min daqui.'},
+    {id:'lo-nhm',t:'17:00',name:'Museu de História Natural',type:'att',dur:'1h30',icon:'🦕',
+     tp:'A pé do Anwar House (10-12 min pela Cromwell Road em direção leste)',
+     desc:'Entrada completamente gratuita. O edifício vitoriano de 1881 (projetado por Alfred Waterhouse) é ele mesmo uma obra-prima: fachadas em terracota com relevos de animais esculpidos em cada superfície. A coleção tem 80 milhões de espécimes: o esqueleto de baleia azul (Hope) no saguão principal, um T-Rex animatrónico, meteoritos de Marte e a Sala de Darwin.',
+     tips:'Entrada gratuita! Só exposições temporárias têm custo. Imperdíveis: o Hall Central (baleia azul), Sala dos Dinossauros (Blue Zone) e a Sala dos Minerais com gemas preciosas.',
+     cur:'O museu tem a maior coleção de história natural do mundo. O esqueleto "Dippy" (Diplodocus), mascote por décadas, foi substituído pela baleia-azul Hope em 2017 como peça central.'},
+    {id:'lo-har',t:'18:30',name:'Harrods',type:'leisure',dur:'1h',icon:'🛍️',
+     tp:'A pé do Museu (10 min pela Brompton Road). Ou Piccadilly Line 1 parada: South Kensington → Knightsbridge.',
+     desc:'A loja de departamentos mais famosa do mundo — e uma experiência independente de comprar. O edifício ocupa um quarteirão inteiro com 330 departamentos em 7 andares. O Food Hall (subsolo) é extraordinário: queijos, chocolates artesanais, sushi, chás raros, vinhos caríssimos. À noite, 11.500 lâmpadas iluminam a fachada.',
+     tips:'Você não precisa comprar nada — passear pelo Food Hall já vale a visita. Experimente os macarons e chocolates. Código de vestimenta exigido: roupas apresentáveis (sem shorts ou sandálias de dedo).',
+     cur:'Fundado em 1849 como mercearia. O lema: "Omnia, Omnibus, Ubique" — tudo, para todos, em todos os lugares. Vendido ao Qatar Investment Authority em 2010 por £1,5 bilhão.'}
+   ]},
+   {date:'2026-05-04',dow:'Segunda-feira',label:'Dia 4',theme:'O Eixo Real de Londres',att:[
+    {id:'lo-bp',t:'10:00',name:'Buckingham Palace · Troca da Guarda',type:'att',dur:'1h30',icon:'👑',
+     tp:'District Line de Earl\'s Court até St. James\'s Park (3 paradas, ~£2,90). Depois 5 min a pé atravessando o parque.',
+     desc:'Residência oficial da Família Real britânica desde 1837. Com 775 cômodos e 830 funcionários. A Troca da Guarda (Changing the Guard) às 11h: soldados em uniformes vermelhos e chapéus de pelo de urso trocam de turno com banda militar — tradição com mais de 200 anos.',
+     tips:'A Troca da Guarda ocorre às 11h, mas nem sempre diariamente — confirme em householddivision.org.uk. Chegue às 10h30 para boa posição. O St. James\'s Park ao lado tem pelicanos e é gratuito.',
+     cur:'O Buckingham Palace tem sua própria central elétrica, posto de correio, médico residente e ATM. Em 2022, após a morte de Elizabeth II, a bandeira ficou a meio-mastro por 10 dias.'},
+    {id:'lo-wb',t:'12:00',name:'Westminster Abbey, Big Ben e Parlamento',type:'att',dur:'2h',icon:'🏛️',
+     tp:'A pé do Buckingham Palace (10 min pela The Mall → Parliament Square)',
+     desc:'Um dos conjuntos históricos mais concentrados do mundo. Westminster Abbey (1065): coroação e sepultura da monarquia britânica desde Guilherme, o Conquistador. Aqui estão os túmulos de Newton, Darwin, Dickens e Hawking. Big Ben é o sino de 13,7 t da Torre Elizabeth — a Torre do Relógio. O Parlamento: berço da democracia parlamentar moderna.',
+     tips:'Westminster Abbey: ingresso £27 (inclui audioguia). Entrada gratuita em cultos religiosos. O Big Ben voltou a funcionar após restauração. Fotografe Parlamento + Ponte Westminster para a foto clássica de Londres.',
+     cur:'O piso da Westminster Abbey tem mais de 600 lápides — você literalmente caminha sobre túmulos. William e Kate se casaram aqui em 2011. O Parlamento de Westminster foi construído no local de um palácio real que pegou fogo em 1834.'},
+    {id:'lo-boro',t:'13:30',name:'Almoço · Borough Market',type:'food',dur:'1h',icon:'🧀',
+     tp:'A pé pela Ponte Westminster (5 min) → South Bank → Borough Market (15 min a pé). Ou Jubilee Line de Westminster até London Bridge (1 parada, £2,80).',
+     desc:'O mercado gastronômico mais antigo de Londres, com história desde o século XIII. Aos fins de semana: queijos artesanais, pães de sourdough, ostras frescas, carnes curadas, street food do mundo todo. É onde os londrinos amantes de gastronomia fazem compras.',
+     tips:'Experimente: raclette no Kappacasein (queijo suíço derretido sobre batatas, ~£8), frango assado do Bar Battu ou o famoso sanduíche de costela lenta. Mercado fecha aos domingos — se for domingo, vá ao Maltby Street Market.',
+     cur:'Borough Market aparece em "Bridget Jones\'s Diary". Harry Potter foi filmado em vários locais de Southwark ao redor.'},
+    {id:'lo-eye',t:'15:00',name:'London Eye',type:'att',dur:'1h30',icon:'🎡',
+     tp:'A pé de Borough Market pela orla do South Bank (sentido oeste, 25 min). Ou Jubilee Line até Waterloo (2 paradas) + 5 min a pé.',
+     desc:'Maior roda-gigante da Europa: 135m de altura, 32 cápsulas de vidro com 25 pessoas cada, 30 minutos para uma volta completa. Vista de 360°: Rio Tâmisa, Big Ben, Parlamento, St. Paul\'s Cathedral, Torre de Londres e até Wembley nos dias claros. Construída para o milênio (2000), era temporária — o sucesso tornou-a permanente.',
+     tips:'Ingresso online: £32 (até 25% mais barato que na bilheteria). Reserve para o fim da tarde (16h-17h) para a luz mais bonita. ⚠️ SEMPRE use cartão contactless nas catracas do metrô — bilhetes de papel são muito mais caros.',
+     cur:'Cada cápsula tem ar condicionado e é selada. A estrutura de 2.100 toneladas foi montada horizontalmente sobre o Tâmisa e depois erguida. Demorou mais de 5 anos de aprovações mas apenas 16 meses de construção.'}
+   ]},
+   {date:'2026-05-05',dow:'Terça-feira',label:'Dia 5',theme:'Torre de Londres, Tower Bridge e Arte',att:[
+    {id:'lo-tow',t:'09:30',name:'Torre de Londres',type:'att',dur:'2h30',icon:'🏰',
+     tp:'District ou Circle Line de Earl\'s Court até Tower Hill (7 paradas, £3,00). 3 min a pé até a entrada.',
+     desc:'Fortaleza medieval de quase 1.000 anos. Guilherme, o Conquistador, começou a construção em 1066. Serviu como palácio real, prisão de alto valor (Ana Bolena, Lady Jane Grey), arsenal e zoológico. Hoje abriga as Joias da Coroa britânica — a coleção mais valiosa do mundo, com o Diamante Koh-i-Noor (105 quilates) e o Cullinan I (530 quilates, o maior diamante lapidado do mundo).',
+     tips:'Ingresso: £29,90 online. O tour guiado pelos Beefeaters (Yeoman Warders) é gratuito com o ingresso e imperdível — são excelentes contadores de histórias. Chegue cedo para evitar filas enormes.',
+     cur:'Os corvos da Torre são considerados guardiões místicos — uma lenda diz que se deixarem a Torre, o reino cairá. O Ravenmaster cuida de pelo menos 6 corvos, com asas levemente aparadas para não voarem longe.'},
+    {id:'lo-tb',t:'12:00',name:'Tower Bridge',type:'att',dur:'1h',icon:'🌉',
+     tp:'A pé da Torre de Londres (3 min pela Thames Path)',
+     desc:'A ponte mais fotogênica de Londres, frequentemente chamada erroneamente de "London Bridge" pelos turistas. Construída de 1886 a 1894 em estilo neogótico vitoriano, é uma ponte levadiça que abre ~1.000 vezes/ano para embarcações. A passarela de vidro a 42 metros oferece vista única do Tâmisa.',
+     tips:'Passarela de vidro: £12,30 adulto. O exterior é gratuito e já dá fotos incríveis. Melhor ângulo: da margem sul com a Torre de Londres ao fundo. Veja horários de abertura em towerbridge.org.uk.',
+     cur:'A "London Bridge" de verdade fica 700m a oeste e é moderna e sem graça. Em 1968, um americano comprou a "London Bridge" pensando estar comprando a Tower Bridge — reconstruiu-a no Arizona, EUA.'},
+    {id:'lo-tate',t:'13:30',name:'Tate Modern · Almoço',type:'att',dur:'2h',icon:'🎨',
+     tp:'A pé da Tower Bridge pela orla sul (20 min sentido oeste). Ou Jubilee Line de London Bridge até Southwark (1 parada, £2,80) + 5 min a pé.',
+     desc:'Maior museu de arte moderna da Europa, instalado numa antiga usina elétrica às margens do Tâmisa. Entrada da coleção permanente: GRATUITA. A antiga Turbine Hall recebe instalações de arte de escala monumental. A coleção inclui Picasso, Dalí, Warhol, Rothko, Basquiat e Kusama. O terraço no 10º andar tem das melhores vistas gratuitas de Londres.',
+     tips:'Entrada gratuita para a coleção permanente. Suba ao terraço do Switch House (10º andar) para vista da St. Paul\'s e do Tâmisa — totalmente de graça.',
+     cur:'A Tate Modern foi inaugurada em 2000 no local da Bankside Power Station, desativada em 1981. Arquitetos Herzog & de Meuron mantiveram a icônica chaminé de 99 metros. Mais de 6 milhões de visitantes por ano.'},
+    {id:'lo-cov',t:'16:00',name:'Covent Garden · Jantar em Leicester Square',type:'leisure',dur:'2h30',icon:'🎭',
+     tp:'Jubilee Line de Southwark até Westminster → Piccadilly/Northern Line até Covent Garden (~4 paradas, £3,30).',
+     desc:'A praça mais animada de Londres com artistas de rua, mercados artesanais e lojas icônicas. Leicester Square e Chinatown (5 min a pé) têm dezenas de restaurantes de todas as culinárias para jantar.',
+     tips:'Os artistas de rua de Covent Garden são os melhores da cidade — alguns são profissionais entre shows no West End. Para fish & chips autêntico: Rock & Sole Plaice em Covent Garden (existe desde 1871).',
+     cur:'O Royal Opera House em Covent Garden é onde a ópera e o Royal Ballet são apresentados. O local foi mercado de flores e vegetais de 1654 a 1974.'}
+   ]},
+   {date:'2026-05-06',dow:'Quarta-feira',label:'Dia 6',theme:'Notting Hill · Voo para Paris',att:[
+    {id:'lo-nh',t:'09:00',name:'Notting Hill · Portobello Road Market',type:'leisure',dur:'1h30',icon:'🌸',
+     tp:'Piccadilly ou District Line de Earl\'s Court até Notting Hill Gate (3 paradas, £2,90).',
+     desc:'Um dos bairros mais charmosos de Londres: fachadas vitorianas em cores pastel, jardins secretos e a Portobello Road Market — o maior mercado de antiguidades do mundo, com 1.000+ barracas de joias vitorianas, roupas vintage, livros raros, pratas e pinturas.',
+     tips:'O mercado pleno funciona principalmente às sextas e sábados. A Golborne Road ao norte tem um mercado mais autêntico e menos turístico com ótimas opções de comida.',
+     cur:'O filme "Notting Hill" (1999) com Julia Roberts e Hugh Grant foi filmado aqui. O Carnaval de Notting Hill (agosto) é o maior festival de rua da Europa, com mais de 2 milhões de participantes.'},
+    {id:'lo-fly',t:'11:00',name:'Partida · Voo para Paris',type:'transp',dur:'4h total',icon:'✈️',
+     tp:'Piccadilly Line de Notting Hill Gate ou Earl\'s Court diretamente até Heathrow Terminals (45-60 min, £6,00 contactless). Aeroporto: London Heathrow (LHR). Chegue 2h antes do voo.',
+     desc:'Partida de Heathrow para Paris. Se voo para CDG (Charles de Gaulle): RER B do aeroporto até Gare du Nord ou Châtelet-Les Halles (40 min, €11,80). Se para Orly: OrlyBus para Denfert-Rochereau (35 min, €12,10).',
+     tips:'Em Paris, euro igual a Madrid. Compre o Navigo Easy Card (€2 pelo cartão) e carregue com tickets t+ (€2,15 cada). Para 4+ viagens por dia vale o passe Navigo Hebdomadaire (€30 / semana).',
+     cur:'A alternativa ao avião seria o Eurostar (trem sob o Canal da Mancha): 2h15 de St. Pancras International para Gare du Nord. Muitas vezes mais barato e sem estresse de aeroporto.'}
+   ]}
+  ]
+ },
+ {
+  id:'paris',name:'Paris',sub:'',flag:'🇫🇷',country:'França',color:'#0055A4',
+  lang:'Francês',card:'Navigo Easy (€2) + tickets t+ (€2,15/viagem)',dates:'06 – 09 Mai',
+  greetings:['Bonjour — Bom dia / Olá (SEMPRE ao entrar em qualquer loja!)','Bonsoir — Boa noite','Merci (beaucoup) — Obrigado(a) (muito obrigado)','S\'il vous plaît — Por favor','Excusez-moi — Com licença','Combien ça coûte? — Quanto custa?','L\'addition, s\'il vous plaît — A conta, por favor'],
+  customs:['⚠️ SEMPRE diga "Bonjour" ao entrar em qualquer estabelecimento — não cumprimentar é considerado grosseria.','Tente falar francês mesmo que mal — os parisienses apreciam o esforço e ficam mais receptivos.','Refeições são sagradas: almoço (12h-14h) e jantar (19h30-22h). Comer na rua caminhando é mal visto.','Gorjeta: não obrigatória — o "service compris" já está incluído. Deixar moedas é apreciado.','Cafés: preços diferentes na barra (au comptoir) e nas mesinhas — na barra é sempre mais barato.','Vestimenta: parisienses se vestem bem mesmo no dia a dia. Evite bermudas e sandálias de dedos em restaurantes.'],
+  gastronomy:['Croissant com Café — O ritual matinal parisiense por excelência em qualquer boulangerie','Confit de Canard — Coxa de pato confitada em sua própria gordura; ícone da culinária francesa','Crème Brûlée — Creme de baunilha com casquinha caramelizada; a sobremesa clássica','Steak Frites — Bife com batatas fritas; o clássico bistrot parisiense','Macarons — Biscoitos de amêndoa coloridos e recheados; prove os da Ladurée ou Pierre Hermé','Onion Soup — Sopa de cebola gratinada com queijo; clássico dos bistrôs parisienses'],
+  days:[
+   {date:'2026-05-06',dow:'Quarta-feira',label:'Dia 6',theme:'Chegada em Paris · Champs-Élysées',att:[
+    {id:'pa-ci',t:'15:00',name:'Check-in — Hôtel Beaujon (8º Arr.)',type:'accom',dur:'1h',icon:'🏨',
+     tp:'De CDG: RER B até Charles de Gaulle-Étoile (~40 min, €11,80). O 8º Arrondissement fica próximo. Taxi de CDG: ~€55-70, 35-50 min. Use o app Uber ou Bolt em Paris.',
+     desc:'O Hôtel Beaujon fica no elegantíssimo 8º Arrondissement — o triângulo Champs-Élysées, Arc de Triomphe e Parc Monceau. Em 5 min a pé você chega ao Arco do Triunfo e a uma caminhada da Torre Eiffel.',
+     tips:'Compre o Navigo Easy Card (€2) + tickets t+ na estação mais próxima. Para 3 dias intensos, o Navigo Hebdomadaire (€30/semana) pode valer se fizer mais de 14 viagens.',
+     cur:'O 8º Arrondissement é o mais glamouroso de Paris: Campos Elíseos, maioria das embaixadas, hotéis Palace (Ritz, Plaza Athénée) e as butiques de alta costura.'},
+    {id:'pa-arc',t:'17:00',name:'Arco do Triunfo',type:'att',dur:'1h',icon:'🏛️',
+     tp:'A pé do hotel (5 min pela Avenue Hoche → Place Charles de Gaulle)',
+     desc:'Mandado construir por Napoleão em 1806 para comemorar suas vitórias. Com 50m de altura e 45m de largura, fica no centro da Place de l\'Étoile — de onde irradiam 12 avenidas, incluindo os Champs-Élysées. Embaixo: a Tumba do Soldado Desconhecido, com chama eterna acesa desde 1923.',
+     tips:'Suba ao topo (€13, gratuito para menores de 18 anos) para a melhor vista dos Campos Elíseos. Para cruzar até o arco, use APENAS o túnel subterrâneo — JAMAIS tente cruzar a Place de l\'Étoile a pé (12 vias sem semáforos!).',
+     cur:'A Place de l\'Étoile tem um dos nós de trânsito mais caóticos do mundo. Por lei, acidentes aqui são sempre considerados culpa de ambas as partes. Seguradoras se recusam a cobrir carros nessa praça.'},
+    {id:'pa-champs',t:'18:00',name:'Passeio pelos Champs-Élysées',type:'leisure',dur:'1h',icon:'🌳',
+     tp:'A pé do Arco do Triunfo (descendo a avenida em direção sudeste)',
+     desc:'A "avenida mais bela do mundo" — 1,9 km de comprimento e 70 metros de largura, ladeada por árvores e as principais marcas do mundo. Desenhada pelo Barão Haussmann no séc. XIX como o eixo central de Paris.',
+     tips:'Não gaste dinheiro nas lojas dos Champs-Élysées (são redes turísticas). O que vale: Ladurée (macarons legendários, nº 75), Grand Palais (monumento arquitetônico) e o Grand Palais des Champs-Élysées renovado.',
+     cur:'No 14 de julho (Bastilha), o maior desfile militar da Europa ocorre nesta avenida. Antes de Haussmann, a área era um pântano e jardim real. Champs-Élysées significa "Campos Elíseos" — o paraíso da mitologia grega.'}
+   ]},
+   {date:'2026-05-07',dow:'Quinta-feira',label:'Dia 7',theme:'Louvre, Tuileries e Torre Eiffel',att:[
+    {id:'pa-conc',t:'10:00',name:'Place de la Concorde',type:'att',dur:'30min',icon:'🗿',
+     tp:'A pé do hotel pelos Champs-Élysées (20 min). Ou Metrô Linha 1 até Concorde (2 paradas, €2,15).',
+     desc:'A maior praça de Paris, no ponto onde os Champs-Élysées encontram o Rio Sena. No centro: o Obelisco de Luxor — monolito egípcio de 23 metros com mais de 3.000 anos, doado pelo Egito à França em 1830. Aqui ficava a guilhotina que decapitou Luis XVI e Maria Antonieta durante a Revolução Francesa.',
+     tips:'Melhor ângulo fotográfico: de frente ao Obelisco, olhando em direção aos Champs-Élysées com o Arco do Triunfo ao fundo.',
+     cur:'O nome "Concorde" (harmonia) foi dado em 1795 após o Terror Revolucionário — um eufemismo histórico desconcertante para o local de 1.300+ execuções por guilhotina.'},
+    {id:'pa-louv',t:'10:30',name:'Museu do Louvre',type:'att',dur:'3h',icon:'🏛️',
+     tp:'A pé pelos Jardins des Tuileries até o Louvre (15 min agradáveis). Ou Metrô Linha 1 até Palais Royal-Musée du Louvre (1 parada, €2,15).',
+     desc:'O maior e mais visitado museu do mundo: 9 milhões de visitantes/ano, 73.000 m² de galerias, 380.000 obras (35.000 em exposição). Instalado num palácio real de 800 anos com a pirâmide de vidro de I.M. Pei (1989). Imperdíveis: Mona Lisa de Leonardo (menorzinha, cercada de multidão), Vênus de Milo (2.100 anos, sem braços), Vitória de Samotrácia (sem cabeça, parece voar).',
+     tips:'Ingresso: €22 (compre online — obrigatório, fila sem reserva pode ser 3h). Menores de 18 e menores de 26 da UE: gratuito. Foque nas 3 obras principais — não tente ver tudo. Acesse pela Pirâmide invertida (Carrousel du Louvre) para menos fila.',
+     cur:'A Mona Lisa foi roubada em 1911 pelo italiano Vincenzo Peruggia, que a escondeu em seu apartamento em Paris por 2 anos. O roubo tornou a obra mundialmente famosa — antes era relativamente desconhecida.'},
+    {id:'pa-lunch',t:'14:00',name:'Almoço no Palais Royal',type:'food',dur:'1h',icon:'🥗',
+     tp:'A pé da saída Richelieu do Louvre (3 min)',
+     desc:'Os Jardins do Palais Royal (a 5 min do Louvre) têm cafés e restaurantes em arcadas do século XVIII — um local mágico longe das multidões. Para economizar: compre um sanduíche jambon-beurre no Monoprix e almoce nos jardins — tradição parisiense.',
+     tips:'As colunas listradas de Daniel Buren no pátio (1986) são um dos pontos fotográficos mais instagramáveis de Paris. O café Nemours na Place Colette é uma escolha local excelente.',
+     cur:'O Palais Royal foi construído para o Cardeal Richelieu em 1629 e depois cedido à Família Real. Hoje abriga o Ministério da Cultura e o Conseil d\'État.'},
+    {id:'pa-eif',t:'18:30',name:'Torre Eiffel e Trocadéro',type:'att',dur:'2h',icon:'🗼',
+     tp:'Metrô Linha 1 de Palais Royal → Châtelet → baldeação Linha 6 (verde) até Trocadéro (3 paradas, €2,15).',
+     desc:'O símbolo mais reconhecível do mundo. Construída por Gustave Eiffel para a Exposição Universal de 1889 (centenário da Revolução), deveria ser demolida após 20 anos. O Esplanade du Trocadéro oferece a vista mais icônica. À noite, a torre pisca com 20.000 lâmpadas por 5 minutos a cada hora em ponto — espetáculo garantido às 22h.',
+     tips:'A vista do Trocadéro é gratuita e melhor que do interior! Para subir: ingresso online obrigatório (€28,30 topo; €17,10 2º andar). Reserve com meses de antecedência — esgota rapidamente. Chegue ao Trocadéro às 19h para luz dourada.',
+     cur:'Gustave Eiffel tinha apartamento secreto no 3º andar onde recebia convidados (Thomas Edison visitou). A torre encolhe 15cm no inverno (ferro contrai com frio) e dilata 15cm no verão.'}
+   ]},
+   {date:'2026-05-08',dow:'Sexta-feira',label:'Dia 8',theme:'Montmartre, Marais e Musée d\'Orsay',att:[
+    {id:'pa-sac',t:'09:00',name:'Montmartre e Sacré-Cœur',type:'att',dur:'2h30',icon:'⛪',
+     tp:'Metrô Linha 2 de Charles de Gaulle-Étoile até Blanche (4 paradas, €2,15). Suba a pé (15 min) ou pelo Funicular (1 ticket t+).',
+     desc:'O bairro mais romântico de Paris, no alto de uma colina de 130m. No final do séc. XIX, lar de Picasso, Van Gogh, Toulouse-Lautrec e Renoir. A Basílica do Sacré-Cœur (1914) é branca e de cúpulas neobizantinas. Os degraus da basílica oferecem uma das mais belas vistas de Paris — sem custo. A Place du Tertre, atrás, é a praça dos pintores de rua.',
+     tips:'Suba pelo Funicular (1 ticket t+) para economizar as pernas. Explore as ruelas ao redor: Rue Lepic e Rue des Abbesses. Para ver Montmartre autêntico longe dos turistas, afaste-se da Place du Tertre.',
+     cur:'Van Gogh viveu na Rue Lepic de 1886 a 1888 — exatamente quando pintou suas obras mais coloridas, influenciado pelos impressionistas de Montmartre. O Moulin Rouge ao pé da colina foi fundado em 1889.'},
+    {id:'pa-mar',t:'12:00',name:'Le Marais · Falafel e Exploração',type:'food',dur:'1h30',icon:'🥙',
+     tp:'Metrô Linha 12 de Abbesses até Madeleine → Linha 8 até Saint-Paul (4 paradas, €2,15).',
+     desc:'O bairro mais dinâmico de Paris: história medieval, comunidade judaica e galeria contemporânea. A Place des Vosges (1612) é a mais antiga e bela praça de Paris. A Rue des Rosiers é o coração do quarteirão judeu, com o melhor falafel de Paris.',
+     tips:'Falafel do L\'As du Fallafel na Rue des Rosiers (€7) é considerado o melhor de Paris — fila enorme, mas vale. Place des Vosges: entre pelas arcadas, é gratuito. O Museu Victor Hugo (na praça) é gratuito.',
+     cur:'Victor Hugo viveu na Place des Vosges por 16 anos — sua casa hoje é museu gratuito. O Marais sobreviveu às demolições de Haussmann por acidente — era usado como depósito.'},
+    {id:'pa-ors',t:'14:30',name:'Musée d\'Orsay',type:'att',dur:'2h',icon:'🎨',
+     tp:'Metrô Linha 1 de Saint-Paul → Châtelet → Linha 12 até Solférino (4 paradas, €2,15).',
+     desc:'Numa antiga estação de trem de 1900, o Musée d\'Orsay tem a maior coleção de arte impressionista do mundo. O enorme relógio de ferro e vidro é um ícone fotográfico. Coleção: 1848-1914. Destaques: Van Gogh, Monet, Degas, Renoir, Gauguin, Toulouse-Lautrec, Seurat e Cézanne.',
+     tips:'Ingresso: €16 (gratuito para menores de 18 e para menores de 26 da UE). Compre online. A vista de Paris pelo relógio do 5º andar (com Sacré-Cœur ao fundo) é extraordinária e gratuita se entrar no museu. Fechado às terças-feiras.',
+     cur:'A Gare d\'Orsay ficou obsoleta em apenas 37 anos — os trens elétricos modernos exigiam plataformas maiores. Foi usada como quartel, correios e set de filme antes de se tornar museu em 1986.'}
+   ]},
+   {date:'2026-05-09',dow:'Sábado',label:'Dia 9',theme:'Croissant e Trem para Nice',att:[
+    {id:'pa-cf',t:'08:30',name:'Café da manhã em boulangerie',type:'food',dur:'45min',icon:'🥐',
+     tp:'A pé — há uma boulangerie em cada esquina de Paris',
+     desc:'O ritual matinal parisiense: uma boulangerie artesanal, um croissant (ou pain au chocolat), um café crème. Há mais de 1.200 boulangeries regulamentadas em Paris — para se chamar assim, o pão precisa ser produzido no local.',
+     tips:'"Un café et un croissant, s\'il vous plaît" (pronunciado: aN kafé é aN kwasaN sil vu plé). Preço: €1,20-2,00 por croissant. Evite cafés com menus em múltiplos idiomas na vitrine — são turísticos e caros.',
+     cur:'O croissant tem origem austríaca (kipferl) e chegou à França através de Maria Antonieta, que era vienense. Os franceses o refinaram com manteiga em camadas (feuilletage), criando 27 a 81 camadas de massa.'},
+    {id:'pa-tgv',t:'10:00',name:'Trem TGV Paris → Nice',type:'transp',dur:'5h30',icon:'🚄',
+     tp:'Metrô Linha 1 de Châtelet até Gare de Lyon (1 parada, €2,15). TGV: Gare de Lyon → Nice-Ville. Duração: ~5h30. Preço: €49-119 (varia pela antecedência — reserve em sncf-connect.com). Saída ~10h30, chegada Nice ~16h.',
+     desc:'A Gare de Lyon é uma das mais belas estações de Paris — visite o Le Train Bleu, o restaurante histórico de 1901 com decoração Belle Époque estonteante. O TGV percorre o sul da França: Lyon, Avignon, Marseille, Toulon e a Costa Azul.',
+     tips:'Compre sanduíches na estação antes de embarcar — o bar do trem é caro. A viagem a partir de Marseille é muito bonita. Nos trens franceses: guarde bagagem de mão sempre à vista — carteiristas são ativos.',
+     cur:'O TGV detém o recorde de velocidade de um trem convencional: 574,8 km/h em 2007. Nice foi italiana (Condado de Nizza) até 1860, quando foi cedida à França.'}
+   ]}
+  ]
+ },
+ {
+  id:'nice',name:'Nice e Mônaco',sub:'',flag:'🇫🇷',country:'França / Principado de Mônaco',color:'#E30A17',
+  lang:'Francês / Monegasco',card:'Trem TER Nice-Monaco (€4,50) · Lignes d\'Azur (€1,70)',dates:'09 – 11 Mai',
+  greetings:['Bonjour — Bom dia (francês predomina em Nice e Mônaco)','Merci — Obrigado(a)','Em Mônaco: sempre use Monsieur/Madame ao se dirigir a alguém','A vosta salut! — Saúde em dialeto niçardo (curiosidade cultural)'],
+  customs:['Nice tem identidade cultural ítalo-francesa única: foi italiana até 1860. Muitos pratos e costumes são fronteiriços.','Mônaco: menor país com circuito de F1. Código de vestimenta mais conservador no Cassino e restaurantes elegantes.','Praias de Nice: são de seixos (pedras redondas), não areia. Leve tapete ou alugue espreguiçadeira (€15-20).','Temperatura do mar em maio: ~18-20°C — ainda fresco para alguns, mas dá para nadar confortavelmente.'],
+  gastronomy:['Socca — Crepe de farinha de grão-de-bico assado em forno a lenha; prato típico niçardo, comer quente no Cours Saleya','Salade Niçoise — Atum, ovos, azeitonas, anchovas, tomate; a receita original NÃO tem alface','Pan Bagnat — Pão redondo recheado com os ingredientes da salade niçoise; o sanduíche niçardo','Pissaladière — Pizza niçarda com cebola caramelizada, anchovas e azeitonas (sem tomate!)','Barbagiuan — Frituras recheadas de ricota e acelga; especialidade monegasca','Bouillabaisse — Lendária sopa de peixe de Marseille, disponível também em Nice'],
+  days:[
+   {date:'2026-05-09',dow:'Sábado',label:'Dia 9',theme:'Chegada em Nice · Vieux-Nice e Castle Hill',att:[
+    {id:'ni-ci',t:'17:00',name:'Check-in em Nice',type:'accom',dur:'1h',icon:'🏨',
+     tp:'Do trem: chegada na Gare de Nice-Ville (centro). Maioria dos hotéis a 5-20 min a pé. Tramway T1 da estação percorre o centro (€1,70).',
+     desc:'Nice é a capital da Riviera Francesa, a 5ª maior cidade da França e uma das mais belas do Mediterrâneo. Com 300 dias de sol por ano, praias de seixos, arquitetura Belle Époque e culinária única entre França e Itália.',
+     tips:'Compre tickets do tramway (€1,70 cada) ou passe diário (€5,50) nas máquinas das paradas. A Gare de Nice-Ville fica no centro — fácil acesso ao Vieux-Nice e à Promenade.',
+     cur:'Nice pertenceu ao Ducado de Sabóia e ao Reino da Sardenha (atual Itália) até 1860. O dialeto niçardo (nissart) ainda é falado por alguns moradores mais velhos.'},
+    {id:'ni-vieux',t:'18:00',name:'Vieux-Nice e Castle Hill',type:'att',dur:'2h',icon:'🌇',
+     tp:'A pé do hotel ou Tramway T1 até Opéra-Vieille Ville.',
+     desc:'O casco antigo de Nice: labirinto de ruelas estreitas com fachadas em tons de laranja, ocre e amarelo — influência italiana inconfundível. A Place Rossetti tem a Catedral barroca de Sainte-Réparate. A Castle Hill (Colline du Château) — parque no alto com vista panorâmica extraordinária da baía de Nice e da Promenade — é o encerramento perfeito do dia.',
+     tips:'Suba à Castle Hill pelo elevador gratuito (perto da Promenade) ou a pé pelas escadas. A vista da cidade com a baía e o Mediterrâneo ao entardecer é uma das mais belas da Riviera.',
+     cur:'As cores vibrantes das fachadas têm explicação histórica: em épocas de peste, casas eram marcadas com cal branca para identificar doentes. Os moradores passaram a usar cores para evitar a associação — e o hábito permaneceu.'},
+    {id:'ni-soc',t:'20:00',name:'Jantar no Cours Saleya',type:'food',dur:'1h30',icon:'🍽️',
+     tp:'A pé — fica no coração do Vieux-Nice.',
+     desc:'O Cours Saleya é a praça mais famosa de Nice. De manhã: mercado de flores e frutas. À noite: restaurantes com mesas ao ar livre numa atmosfera mediterrânea festiva. Ideal para a cozinha niçarda autêntica.',
+     tips:'Experimente a Socca (crepe de grão-de-bico) no Chez René Socca na Rue Miralheti — os melhores de Nice. Comer em pé, na rua, quente. Para jantar com mesa: Lou Pilha Leva tem ótimo custo-benefício.',
+     cur:'A Socca só existe em Nice e arredores — os nicianos consideram heresia chamá-la de comida italiana. É assada em fornos gigantes de cobre com lenha e servida em pedaços irregulares, sempre com pimenta preta.'}
+   ]},
+   {date:'2026-05-10',dow:'Domingo',label:'Dia 10',theme:'Promenade e Bate-Volta a Mônaco',att:[
+    {id:'ni-prom',t:'09:00',name:'Promenade des Anglais',type:'att',dur:'1h',icon:'🌊',
+     tp:'A pé da maioria dos hotéis (5-15 min)',
+     desc:'O bulevar mais famoso da Riviera Francesa — 7 km ao longo do Mediterrâneo, com palmeiras e a orla de seixos brancos. Construída no século XIX pelos ingleses ricos que passavam o inverno em Nice (daí "dos Ingleses"). O azul intenso e cristalino do Mediterrâneo aqui é absolutamente impressionante.',
+     tips:'Caminhe em direção ao Vieux-Nice para chegar ao Marché du Cours Saleya (abre 7h). Os seixos são desconfortáveis sem sandálias. O Hotel Negresco (1913) com sua cúpula rosa é um marco arquitetônico.',
+     cur:'A Promenade foi palco de um atentado terrorista em 14 de julho de 2016 (Dia da Bastilha) com 87 vítimas. Hoje tem câmeras e barreiras de segurança discretas, mas mantém o espírito vibrante.'},
+    {id:'ni-tren',t:'10:30',name:'Trem Nice → Mônaco',type:'transp',dur:'20min',icon:'🚂',
+     tp:'Gare de Nice-Ville (Tramway T1). TER regional Nice → Monaco-Monte Carlo. Duração: 20-25 min. Frequência: a cada 30 min. Preço: €4,50 ida (€9,00 ida e volta). Compre o bilhete de volta aqui para não perder tempo em Mônaco.',
+     desc:'O trem percorre a Costa Azul ao longo das falésias sobre o Mediterrâneo — uma das viagens mais bonitas da Europa, com vistas do mar em vários trechos. Mônaco tem apenas 2,02 km² — menor que o Parque do Ibirapuera.',
+     tips:'Na estação de Monaco-Monte Carlo, use o elevador ou escadas rolantes para subir ao nível da cidade — a estação fica abaixo do nível urbano.',
+     cur:'Mônaco não tem imposto de renda desde 1869. 38% dos residentes são milionários e há mais Rolls-Royce per capita do que em qualquer outro lugar do mundo.'},
+    {id:'ni-cas',t:'11:30',name:'Casino de Monte-Carlo',type:'att',dur:'1h',icon:'🎰',
+     tp:'Da estação: suba pelo elevador → Boulevard Rainier III (~10 min a pé subindo).',
+     desc:'O cassino mais famoso do mundo, inaugurado em 1863. Projetado por Charles Garnier (mesmo da Ópera de Paris), o edifício Belle Époque é um espetáculo visual. A Place du Casino tem escadarias fotogênicas, fontes e o luxuoso Hôtel de Paris. Cenário do cassino em James Bond "GoldenEye".',
+     tips:'Entrada ao saguão (Atrium): gratuita e vale muito. Salas de jogo: €17 (traje elegante exigido, sem shorts). Você não precisa jogar para entrar. Fotografar nas mesas: proibido.',
+     cur:'O Cassino pagou dividendos aos monegascos de 1870 a 1962 — o lucro do cassino financiava o estado. Os residentes não pagavam impostos, sustentados pelo dinheiro que os estrangeiros perdiam jogando.'},
+    {id:'ni-roch',t:'13:00',name:'La Rocher — Palácio do Príncipe',type:'att',dur:'2h',icon:'🏰',
+     tp:'Ônibus nº 1 ou 2 de Place du Casino até La Rocher (10 min, €2). Ou a pé subindo pela Rue Grimaldi (~20 min).',
+     desc:'La Rocher (A Rocha) é a parte histórica de Mônaco — fortaleza sobre rochedo de 60m acima do Mediterrâneo. O Palácio do Príncipe é a residência oficial de Alberto II, da dinastia Grimaldi no poder ininterruptamente desde 1297. O Museu Oceanográfico (1910), fundado pelo Príncipe Alberto I, tem um aquário extraordinário escavado na rocha do penhasco.',
+     tips:'Troca da Guarda no Palácio: 11h55 diariamente (gratuita). Museu Oceanográfico: €20 — vale se gosta de vida marinha. Almoce em La Rocher com vista para o porto.',
+     cur:'A família Grimaldi governa Mônaco desde 1297 — 727 anos ininterruptos, tornando-a a monarquia reinante mais antiga da Europa ainda no poder. François Grimaldi entrou no castelo disfarçado de monge franciscano.'},
+    {id:'ni-f1',t:'15:30',name:'Circuito de F1 de Mônaco',type:'att',dur:'1h',icon:'🏎️',
+     tp:'A pé descendo de La Rocher em direção ao porto (15 min).',
+     desc:'O Circuito de Mônaco — o mais famoso e histórico da Fórmula 1 — e você literalmente anda pelas pistas! Como passa por ruas públicas, qualquer pessoa pode caminhar pelo traçado fora das semanas de corrida. Pontos icônicos: Curva Fairmont (Loews Hairpin), o túnel e a Chicane do Harbourfront.',
+     tips:'Use o Google Maps para traçar a rota do circuito e identificar cada curva. O Port Hercule durante o GP recebe iates de bilhões de euros. Verifique as datas do GP de Mônaco (geralmente em maio) — parte da cidade pode estar fechada.',
+     cur:'O Circuito tem 3,337 km — o mais curto da F1. Velocidade máxima no túnel: ~290 km/h. Os carros "tocam" nas barreiras nas curvas — os pilotos dirigem literalmente roçando as proteções.'}
+   ]},
+   {date:'2026-05-11',dow:'Segunda-feira',label:'Dia 11',theme:'Mercado de Flores · Trem para Bolonha',att:[
+    {id:'ni-flow',t:'08:00',name:'Marché du Cours Saleya — Flores',type:'food',dur:'1h',icon:'🌸',
+     tp:'A pé do hotel (centro de Nice).',
+     desc:'O mercado de flores de Nice é uma das experiências mais bonitas da Riviera: explosão de cores de rosas, lavanda, margaridas e flores exóticas desde cedo da manhã. Além das flores, tem bancas de frutas locais, azeitonas, queijos e produtos da Provence.',
+     tips:'Compre lavanda da Provence (mais barata aqui que em qualquer loja turística). Experimente tapenade (pasta de azeitonas) caseira. Tem bancas de socca e pan bagnat logo ao redor.',
+     cur:'O Cours Saleya é mercado de flores e frutas diariamente, exceto às segundas-feiras — quando vira mercado de antiguidades. Funciona desde o século XVII.'},
+    {id:'ni-bol',t:'10:30',name:'Trem Nice → Bolonha (com baldeação)',type:'transp',dur:'6h30',icon:'🚄',
+     tp:'Gare de Nice-Ville. Rota: Nice → Gênova (Itália) → Bolonha. Envolve 1 baldeação em Gênova ou Milão. Duração total: ~6-7h. Preço: €35-80 (reserve em trenitalia.com ou trainline.eu). Chegada em Bolonha: ~17h.',
+     desc:'Uma das rotas de trem mais cênicas da Europa: percorre a Riviera italiana (Menton, Ventimiglia, San Remo, Savona) antes de entrar nas colinas da Ligúria rumo a Gênova e depois ao interior da Emília-Romanha.',
+     tips:'Se houver escala em Gênova, tire 30 min para o Porto Antico — belíssimo. Leve comida e água. Nos trens italianos (Trenitalia), o bilhete precisa ser VALIDADO (carimbado) antes de embarcar nas máquinas amarelas das plataformas.',
+     cur:'A fronteira entre França e Itália entre Menton e Ventimiglia é uma das regiões mais culturalmente ricas da Europa — mistura de idiomas, culinárias e tradições em poucos quilômetros.'}
+   ]}
+  ]
+ },
+ {
+  id:'bologna',name:'Bolonha & San Marino',sub:'',flag:'🇮🇹',country:'Itália / San Marino',color:'#009246',
+  lang:'Italiano',card:'Ônibus TPER Bologna (€1,50) · Trenitalia para Rimini',dates:'11 – 13 Mai',
+  greetings:['Buongiorno — Bom dia (até ~12h)','Buona sera — Boa tarde/noite','Grazie (mille) — Obrigado (muito obrigado)','Prego — De nada / Por favor','Scusi — Com licença','Quanto costa? — Quanto custa?','Il conto, per favore — A conta, por favor'],
+  customs:['Cappuccino JAMAIS após o almoço — os italianos consideram heresia. Café espresso é o adequado após refeições.','Validar o bilhete: nos ônibus e trens locais da Itália, carimbar antes de embarcar é obrigatório — a multa é alta.','Refeições lentas são cultura: almoço (13h-15h) e jantar (20h-22h) são eventos sociais. Pedir a conta antes de estar pronto é considerado rude.','Vestuário em igrejas: ombros e joelhos cobertos obrigatórios. Algumas têm xales na entrada.','Portico: Bolonha tem 38 km de arcadas cobertas — caminhe por elas para experimentar a arquitetura medieval única.'],
+  gastronomy:['Tagliatelle al Ragù — O ORIGINAL bolonhese: tagliatelle (não espaguete!) com carne, vinho e pouco tomate','Tortellini in Brodo — Mini pasta recheada de carne em caldo; o prato mais típico de Bolonha','Mortadella — Embutido de porco com pistache, inventado em Bolonha no séc. XVII','Lasagne alla Bolognese — A lasanha original, com ragù e bechamel; nada a ver com as versões do mundo','Piadina Romagnola — Pão achatado recheado de embutidos e queijos; comida de rua deliciosa','Cotoletta alla Bolognese — Escalope de vitela com presunto parma e queijo gratinado'],
+  days:[
+   {date:'2026-05-11',dow:'Segunda-feira',label:'Dia 11',theme:'Chegada em Bolonha · La Grassa, La Dotta, La Rossa',att:[
+    {id:'bo-ci',t:'18:00',name:'Check-in em Bolonha',type:'accom',dur:'1h',icon:'🏨',
+     tp:'De Bologna Centrale (estação): o centro histórico fica a 15 min a pé pela Via dell\'Indipendenza (reta). Ônibus TPER linhas 11, 20 ou 27 para Piazza Maggiore (€1,50).',
+     desc:'Bologna: "La Grassa" (a melhor gastronomia da Itália), "La Dotta" (lar da universidade mais antiga do mundo ocidental, fundada em 1088) e "La Rossa" (pelas fachadas em tijolo vermelho e pelos 38 km de pórticos medievais). O centro histórico é Patrimônio Mundial da UNESCO.',
+     tips:'Explore os pórticos (porticos): 38 km de arcadas cobertas permitem caminhar pela cidade inteira sem se molhar — uma engenharia medieval genial.',
+     cur:'A Universidade de Bolonha (fundada em 1088) é a mais antiga do mundo ocidental. Entre seus alunos: Copérnico, Dante, Petrarca e Erasmo de Roterdã.'},
+    {id:'bo-piaz',t:'19:00',name:'Piazza Maggiore e Aperitivo',type:'att',dur:'1h30',icon:'🏛️',
+     tp:'A pé da maioria dos hotéis do centro.',
+     desc:'O coração de Bolonha: cercada pela Basilica di San Petronio (5ª maior igreja do mundo, não concluída desde o séc. XV), o Palazzo d\'Accursio (câmara municipal) e o Palazzo del Podestà. A "passeggiata" às 19h-20h é o ritual italiano de passear e ser visto, com aperitivo nos bares ao redor.',
+     tips:'O Aperitivo italiano (Aperol Spritz, Lambrusco, Prosecco) é uma instituição: entre 18h e 21h, muitos bares oferecem buffet de petiscos gratuito com a compra de uma bebida. Procure placas "Aperitivo".',
+     cur:'A Basilica di San Petronio deveria ter sido maior que a Basílica de São Pedro em Roma — o Papa interveio e parou a construção. Hoje, 500 anos depois, ainda está "inacabada".'}
+   ]},
+   {date:'2026-05-12',dow:'Terça-feira',label:'Dia 12',theme:'Aventura em San Marino',att:[
+    {id:'bo-rim',t:'08:00',name:'Trem Bolonha → Rimini',type:'transp',dur:'1h',icon:'🚂',
+     tp:'Bologna Centrale → Rimini: Trenitalia Regionale. Duração: ~1h. Preço: €11,00. Frequência: a cada 30 min. Valide o bilhete antes de embarcar (máquinas amarelas na plataforma).',
+     desc:'Rimini é cidade costeira da Riviera Adriática, famosa por praias de areia e vida noturna. Da estação partem os ônibus para San Marino. Na estação, há um café com bons cornetti (croissants italianos) para o café da manhã.',
+     tips:'Tome café da manhã em Rimini antes de pegar o ônibus. Na saída da estação, vire à esquerda — há um bar local bom e econômico.',
+     cur:'Rimini é cidade natal do cineasta Federico Fellini — há um museu em sua homenagem. A praia de Rimini foi palco do filme autobiográfico "Amarcord" (1973), ganhador do Oscar.'},
+    {id:'bo-bus',t:'09:30',name:'Ônibus Rimini → San Marino',type:'transp',dur:'50min',icon:'🚌',
+     tp:'Bonelli Bus: parte em frente à Rimini Centrale (saída principal). Duração: 50 min. Preço: €6,00 ida / €11,00 ida e volta. Horário: a cada hora. Compre no motorista ou em bonellibus.com.',
+     desc:'A subida percorre as colinas dos Apeninos com vistas do Adriático — paisagem muito bonita, especialmente nos últimos 10 km de curvas pela serra.',
+     tips:'Compre o bilhete de ida e volta já em Rimini para garantir disponibilidade na volta. O ônibus deixa os passageiros no centro de San Marino, na Piazza Garibaldi.',
+     cur:'San Marino foi fundada em 301 d.C. pelo pedreiro cristão Marino de Rab — tornando-a a república mais antiga do mundo ainda existente, com 1.724 anos de história.'},
+    {id:'bo-sm',t:'10:30',name:'San Marino — As Três Torres e Vista dos Apeninos',type:'att',dur:'3h',icon:'🏰',
+     tp:'A pé do ponto de ônibus (centro de San Marino, tudo próximo).',
+     desc:'A República de San Marino: o terceiro menor país do mundo (61 km²) e totalmente rodeado pela Itália. Localizado no topo do Monte Titano. As três torres medievais (Guaita, Cesta e Montale, séc. X-XV) são o símbolo do país e oferecem vistas de 360° dos Apeninos e, nos dias claros, do Mar Adriático.',
+     tips:'Ingresso combinado Guaita + Cesta: €7,50. Carimbe seu passaporte (balcão específico para turistas — o carimbo é raro e colecionável). Chocolates e licores locais são souvenirs perfeitos. O centro histórico é Patrimônio Mundial da UNESCO.',
+     cur:'San Marino tem mais automóveis que habitantes: 1,23 carros/pessoa. Zero dívida pública e PIB per capita comparável ao da Alemanha. Não é membro da UE mas usa o Euro por acordo especial.'},
+    {id:'bo-volta',t:'16:00',name:'Retorno para Bolonha via Rimini',type:'transp',dur:'2h30',icon:'🚌',
+     tp:'Bonelli Bus: San Marino → Rimini (50 min, incluso no bilhete de volta). Trem Rimini → Bologna Centrale (~1h, €11,00). Chegada a Bolonha: ~18h30.',
+     desc:'Retorno a Bolonha para jantar. A Via Pescherie Vecchie e o Quadrilatero (o quarteirão gastronômico histórico) são perfeitos para encerrar o dia.',
+     tips:'Jantar no Quadrilatero: Trattoria di Via Serra ou Bottega Portici para autêntico tagliatelle al ragù bolonhese. Reserve com antecedência — os melhores são cheios.',
+     cur:'O ragù bolonhese original (registrado na Câmara de Comércio de Bolonha em 1982) usa tagliatelle de ovo, NÃO espaguete. E leva pouco tomate — é principalmente um molho de carne.'}
+   ]},
+   {date:'2026-05-13',dow:'Quarta-feira',label:'Dia 13',theme:'Due Torri · Voo para Malta',att:[
+    {id:'bo-tor',t:'09:00',name:'Due Torri (Duas Torres) e Centro Histórico',type:'att',dur:'1h30',icon:'🗼',
+     tp:'A pé do hotel.',
+     desc:'As Due Torri são o símbolo de Bolonha: Torre Asinelli (97m, a mais alta da Itália) e Torre Garisenda (48m, inclinada — inspirou Dante na Divina Comédia). No auge do séc. XII-XIII, Bolonha tinha 180 torres — símbolos de riqueza das famílias nobres. Hoje restam apenas 20.',
+     tips:'Suba a Torre Asinelli (€6, 498 degraus) para a melhor vista de Bolonha — abre às 9h. O Mercato di Mezzo (mercado antigo transformado em espaço gastronômico) é ótimo para o café da manhã.',
+     cur:'A Torre Garisenda foi cortada no séc. XIV por medo de colapso (o solo de argila cedeu). Dante a menciona na Divina Comédia como metáfora de algo imponente e ameaçador.'},
+    {id:'bo-fly',t:'12:00',name:'Voo Bolonha → Malta',type:'transp',dur:'5h total',icon:'✈️',
+     tp:'BLQ Express do centro até o aeroporto Guglielmo Marconi (30 min, €6,50). Voo direto BLQ → MLA. Duração: ~2h. Chegada Malta: ~16-17h.',
+     desc:'Bolonha tem um aeroporto compacto e eficiente. Malta fica no coração do Mediterrâneo, entre a Sicília e a costa norte da Tunísia.',
+     tips:'Ao chegar em Malta: Ônibus Express X4 do aeroporto → Valletta Bus Terminal (€2,00, 30-40 min). Instale o app Bolt (excelente em Malta para táxis) ainda no Brasil.',
+     cur:'Malta fica a apenas 90 km da Sicília italiana e 290 km da Tunísia africana — geograficamente, é o cruzamento do Mediterrâneo.'}
+   ]}
+  ]
+ },
+ {
+  id:'malta',name:'Malta',sub:'',flag:'🇲🇹',country:'Malta',color:'#CF142B',
+  lang:'Maltês e Inglês',card:'Tallinja Card Explore (€21 / 7 dias ilimitado)',dates:'13 – 17 Mai',
+  greetings:['Bonġu — Bom dia (maltês)','Bonswa — Boa noite (maltês)','Grazzi — Obrigado(a) (maltês)','Hello / Hi — Olá (inglês, amplamente usado)','How much? — Quanto custa?','Please / Thank you — Por favor / Obrigado'],
+  customs:['Malta é profundamente católica: uma igreja para cada 363 habitantes. As Festas de Santo Padroeiro nos vilarejos são experiências culturais únicas.','O maltês (Malti) é uma língua semítica com raízes árabes misturada com siciliano e inglês — a única língua semítica escrita em alfabeto latino.','Trânsito à esquerda: herança britânica. Olhe à direita ao traversar ruas.','O Bolt funciona muito melhor que táxis convencionais em Malta — use sempre o app.','Água da torneira: potável mas com gosto forte de cloro. Prefira água engarrafada.','Maio em Malta: sol intenso, temperatura ~22-25°C. Protetor solar é essencial.'],
+  gastronomy:['Pastizzi — Folhados de massa com ricota ou ervilha; o snack maltês por excelência (€0,50 cada)','Fenek (Coelho) — Prato nacional: coelho estufado ao vinho tinto com ervas; experimente em Marsaxlokk','Ftira — Pão achatado maltês com atum, tomate, alcaparras e azeitonas','Gbejniet — Queijo de ovelha local; seco (peppered) ou fresco','Kinnie — Refrigerante local de laranja amarga e ervas; o "Guaraná" de Malta','Imqaret — Bolinhos fritos com recheio de tâmara e especiarias; doce de rua maltês'],
+  days:[
+   {date:'2026-05-13',dow:'Quarta-feira',label:'Dia 13',theme:'Chegada · Sliema Waterfront',att:[
+    {id:'mt-ci',t:'17:00',name:'Check-in em Sliema',type:'accom',dur:'1h',icon:'🏨',
+     tp:'Do aeroporto: Ônibus X4 → Valletta Bus Terminal (€2,00, 30 min) → ônibus 12 ou 13 para Sliema (15 min). Ou Bolt direto do aeroporto até Sliema (~€20-25, 25 min).',
+     desc:'Sliema é o bairro mais cosmopolita de Malta, do outro lado do porto de Valletta. Com orla de 3 km, restaurantes variados e vista para a cidade histórica, é a base perfeita para explorar Malta. O Ferry de Sliema para Valletta (€1,50, 10 min) é uma das melhores experiências da ilha.',
+     tips:'Compre o Tallinja Card Explore na Airport Lounge (€21 para 7 dias ilimitados — muito vantajoso). Instale o app Bolt para táxis.',
+     cur:'Malta foi colônia britânica de 1800 a 1964. Durante a 2ª Guerra Mundial, Malta foi tão bombardeada e tão heroica que o Rei George VI concedeu à ilha inteira a Cruz de Jorge — a mais alta honra civil britânica.'},
+    {id:'mt-sl',t:'18:30',name:'Passeio na Orla de Sliema',type:'leisure',dur:'1h30',icon:'🌅',
+     tp:'A pé — toda a orla de Sliema é para pedestres.',
+     desc:'A Promenade de Sliema é perfeita para uma caminhada ao entardecer com a vista de Valletta iluminada do outro lado do Grand Harbour. Cafés e restaurantes ao longo da orla, e locais que nadam diretamente dos rochedos.',
+     tips:'Vista imperdível do pôr do sol: posicione-se na ponta de Sliema (Tower Road, em direção a St. Julian\'s) com Valletta ao fundo. Muitos locais nadam aqui — leve maiô se quiser.',
+     cur:'St. Julian\'s (Paceville), logo ao lado de Sliema, é o coração da vida noturna de Malta — dezenas de bares e clubes que só animam depois das 22h.'}
+   ]},
+   {date:'2026-05-14',dow:'Quinta-feira',label:'Dia 14',theme:'Valletta — Capital da Cavalaria',att:[
+    {id:'mt-fer',t:'09:30',name:'Ferry Sliema → Valletta',type:'transp',dur:'10min',icon:'⛵',
+     tp:'Cais de Sliema (Strand, centro). A cada 30 min. Preço: €1,50 ida. 10 min de barco.',
+     desc:'Esta curta travessia pelo Grand Harbour com Valletta se aproximando é uma das experiências mais marcantes de Malta. Valletta é a menor capital da UE (0,8 km²) mas das mais densas em monumentos históricos. Toda a cidade é Patrimônio Mundial UNESCO.',
+     tips:'Caminhe pela Triq ir-Repubblika (Rua República) do cais em direção ao forte.',
+     cur:'O Grand Harbour de Valletta é considerado por muitos o porto natural mais belo do mundo. Fundada em 1566 pelos Cavaleiros Hospitalários de São João.'},
+    {id:'mt-sjc',t:'10:00',name:'Co-Catedral de São João',type:'att',dur:'1h30',icon:'⛪',
+     tp:'A pé da chegada do Ferry (5 min subindo pela Triq ir-Repubblika).',
+     desc:'Considerada uma das igrejas barrocas mais extraordinárias da Europa. O exterior de pedra bege parece modesto — mas o interior é uma explosão de dourado, mármore e pinturas em todas as superfícies. O piso é um tapete de lápides de mármore coloridas dos Cavaleiros de Malta. Ponto alto: "A Decapitação de São João Batista" de Caravaggio (1608) — sua maior obra, assinada com o próprio sangue segundo a lenda.',
+     tips:'Ingresso: €15 (inclui audioguia obrigatório — vale cada euro). Reserve online. A Sala do Caravaggio fica ao fundo esquerdo. O audioguia explica cada lápide do piso em detalhe.',
+     cur:'Caravaggio fugiu para Malta em 1607 após matar um homem em Roma. Pintou "A Decapitação" como pagamento à Ordem de Malta em troca de um cargo de Cavaleiro — foi expulso meses depois por outra briga.'},
+    {id:'mt-bar',t:'12:00',name:'Upper Barraka Gardens e Salute dos Canhões',type:'att',dur:'45min',icon:'🌿',
+     tp:'A pé da Co-Catedral (10 min pela Triq ir-Repubblika em direção ao forte).',
+     desc:'Jardim suspenso sobre as muralhas de Valletta com a vista mais icônica de Malta: o Grand Harbour com as Three Cities ao fundo. Ao meio-dia em ponto, a Salute (salva de canhões) é disparada — tradição naval com séculos de história, às 12h e 16h diariamente.',
+     tips:'Chegue às 11h50 para a Salute das 12h — é impressionante. O café no jardim tem vista espetacular para o almoço.',
+     cur:'O Grand Harbour foi palco de batalhas históricas: Grande Cerco dos Otomanos (1565) e bombardeios da 2ª Guerra Mundial. Churchill disse: "Malta tem orgulho para o mundo inteiro".'},
+    {id:'mt-fort',t:'14:30',name:'Fort St. Elmo e National War Museum',type:'att',dur:'1h30',icon:'🏰',
+     tp:'A pé do centro (10 min pela Triq ir-Repubblika até a ponta da península).',
+     desc:'Na ponta de Valletta, o Fort St. Elmo foi palco do Grande Cerco de Malta de 1565: 600 cavaleiros e 8.000 soldados resistiram por meses a 40.000 otomanos de Suleimão, o Magnífico. O National War Museum tem exposições sobre a Ordem de Malta, a resistência na 2ª Guerra e a história militar da ilha.',
+     tips:'Ingresso: €12. O terraço tem vista para o Grand Harbour de um lado e o Mediterrâneo do outro. Veja o George Cross original (concedido pelo Rei George VI a Malta em 1942) na exposição da 2ª Guerra.',
+     cur:'Quando os últimos cavaleiros do Fort St. Elmo caíram em 1565, os otomanos os pregaram em cruzes e jogaram no mar. O Gran Mestre De Valette respondeu decapitando todos os prisioneiros otomanos e disparando suas cabeças de volta com canhões.'}
+   ]},
+   {date:'2026-05-15',dow:'Sexta-feira',label:'Dia 15',theme:'Blue Grotto e Marsaxlokk',att:[
+    {id:'mt-bg',t:'09:30',name:'Blue Grotto (Gruta Azul)',type:'att',dur:'2h',icon:'🏊',
+     tp:'Bolt de Sliema ao Blue Grotto (~€15-18, 30-40 min). Ou Ônibus 74 de Valletta Bus Terminal para Żurrieq (45 min, €2,00 com Tallinja Card) + táxi local (5 min, €5).',
+     desc:'Conjunto de cavernas marinhas naturais na costa sul onde o mar fica de um azul cobalto fosforescente irreal — causado pela reflexão da luz solar no calcário branco das paredes. Barcos a remo levam ao interior das cavernas. A paisagem de falésias de calcário dourado sobre o Mediterrâneo é extraordinária.',
+     tips:'Barcos: das 9h às 16h (vento norte cancela as saídas). Chegue cedo para evitar filas. Custo do barco: ~€8-10/pessoa. A luz é melhor de manhã. Se o mar estiver agitado, os barcos não saem — vá direto para Marsaxlokk.',
+     cur:'A transparência da água dentro das grutas é de tal qualidade que os barcos parecem flutuar no ar. A caverna principal tem 20 metros de altura.'},
+    {id:'mt-mar',t:'12:00',name:'Marsaxlokk — Porto dos Pescadores',type:'att',dur:'2h30',icon:'⚓',
+     tp:'Bolt de Blue Grotto (~€8, 10 min). Ou Ônibus 81 de Żurrieq para Marsaxlokk (20 min).',
+     desc:'O vilarejo de pescadores mais pitoresco de Malta e do Mediterrâneo. O porto fica coberto de Luzzus — barcos de pesca tradicionais pintados em cores vivas (amarelo, azul, vermelho) com os Olhos de Osíris na proa, herança fenícia de 3.000 anos. Aos domingos, o maior mercado de peixe de Malta.',
+     tips:'Almoce com peixe fresco do dia: Ir-Rizzu ou Il-Kamra tal-Prinċep — peixe do dia que chegou pela manhã. Maio é temporada de atum e dorado. Peça o Fenek (coelho maltês) se quiser o prato nacional.',
+     cur:'Os Olhos de Osíris nos barcos são herança direta dos fenícios, que colonizaram Malta há 3.000 anos. Os pescadores acreditam que os olhos protegem no mar — tradição que existe há milênios no Mediterrâneo.'}
+   ]},
+   {date:'2026-05-16',dow:'Sábado',label:'Dia 16',theme:'Mdina — A Cidade Silenciosa',att:[
+    {id:'mt-mdina',t:'10:00',name:'Mdina — A Cidade Silenciosa',type:'att',dur:'3h',icon:'🏰',
+     tp:'Ônibus 202 de Sliema Bus Stop (€2,00 com Tallinja Card, 45 min). Ou Bolt (~€15, 25 min). Desça na parada "Mdina" e suba pela Main Gate.',
+     desc:'Uma das cidades medievais mais bem preservadas da Europa — e a mais silenciosa. Construída pelos Árabes no séc. IX, foi capital de Malta por milênios. O tráfego é proibido dentro das muralhas (apenas residentes). Com apenas 250 habitantes, caminhar pelas ruelas de pedra calcária em absoluto silêncio é uma experiência fora do tempo.',
+     tips:'Visite: Catedral de São Paulo de Mdina (barroco belíssimo), Bastião com vista panorâmica da ilha, Palazzo Falson (€10). O Fontanella Tea Garden nas muralhas tem vista incrível. Explore também Rabat ao lado (catacumbas de São Paulo, €5).',
+     cur:'Mdina apareceu como "Porto Real" nas primeiras temporadas de "Game of Thrones". A cidade tem silêncio tão absoluto que o som mais alto costuma ser o vento e os sinos da catedral.'},
+    {id:'mt-rab',t:'13:30',name:'Rabat e Catacumbas de São Paulo',type:'att',dur:'1h30',icon:'⛪',
+     tp:'A pé de Mdina (5 min — as cidades são adjacentes, separadas por um portão).',
+     desc:'Rabat fica ao lado de Mdina com caráter muito diferente: vivo, com mercados e cafés locais. As Catacumbas de São Paulo (séc. IV d.C.) são uma rede subterrânea de túneis funerários cristãos de 2.000 anos. Segundo a tradição, o Apóstolo Paulo passou o inverno aqui em 60 d.C. após naufrágio na costa de Malta.',
+     tips:'Almoço em Rabat: Crystal Palace Restaurant (piadine e pastizzi locais) ou qualquer café na praça principal — mais barato e autêntico que em Mdina. Catacumbas: €5.',
+     cur:'Malta é mencionada nos Atos dos Apóstolos (Bíblia, Atos 28) quando São Paulo naufraga na ilha. Os malteses são profundamente cristãos em parte por causa desta tradição de 2.000 anos.'},
+    {id:'mt-bch',t:'15:30',name:'Praia de Mellieħa (opcional)',type:'leisure',dur:'2h',icon:'🏖️',
+     tp:'Ônibus 221 de Rabat para Mellieħa (45 min, Tallinja Card). Ou Bolt (~€15, 25 min).',
+     desc:'Mellieħa Bay é a maior praia de areia de Malta — rara na ilha, que tem principalmente praias de pedra. Em maio, o mar está agradável (~20°C) e as praias não estão lotadas como no verão.',
+     tips:'Se o orçamento não comportar Bolt, fique mais em Mdina/Rabat e retorne a Sliema de ônibus. Espreguiçadeiras na praia: €10-15. Há bares à beira-mar.',
+     cur:'Malta tem 55 km de costa com 57 praias — poucas de areia, a maioria de pedra calcária ou seixo. As melhores praias de areia ficam ao norte (Mellieħa, Golden Bay).'}
+   ]},
+   {date:'2026-05-17',dow:'Domingo',label:'Dia 17',theme:'Última manhã em Malta · Voo para Barcelona',att:[
+    {id:'mt-am',t:'09:00',name:'Manhã livre em Sliema',type:'leisure',dur:'2h',icon:'🌅',
+     tp:'A pé — orla de Sliema.',
+     desc:'Última manhã em Malta. Bom momento para comprar souvenirs autênticos: lace maltesa (renda), cerâmicas, Kinnie, licores locais (Bajtra — licor de figo da Índia) e sal de Gozo.',
+     tips:'Evite as lojas perto da Co-Catedral (caras). Prefira os mercados locais ou as lojas de artesanato em Sliema. O sal de Gozo é um souvenir leve e excelente.',
+     cur:'Malta é famosa pela tradição de rendas (lace) que vem do século XVI — trazida pelos Cavaleiros de Malta. Cada pedaço é feito à mão com agulhas minúsculas.'},
+    {id:'mt-fly',t:'12:00',name:'Voo Malta → Barcelona',type:'transp',dur:'6h total',icon:'✈️',
+     tp:'Aeroporto de Malta (MLA): Ônibus X4 do centro de Valletta (€2,00, 30 min). Ou Bolt de Sliema (~€18-22, 25 min). Voo MLA → BCN. Duração: ~2h.',
+     desc:'De Malta você retorna ao continente europeu. De Barcelona, para Andorra de carro: A-2 → N-II (3h, via Lleida). Lembre: você está de carro a partir daqui.',
+     tips:'Ao alugar o carro em Barcelona: verifique se a cobertura de seguro inclui Andorra (alguns contratos excluem). De Barcelona até Andorra la Vella: ~3h pela A-2 → Lleida → N-II.',
+     cur:'Andorra la Vella é a capital mais alta da Europa: 1.023 metros de altitude.'}
+   ]}
+  ]
+ },
+ {
+  id:'andorra',name:'Andorra',sub:'',flag:'🇦🇩',country:'Principado de Andorra',color:'#003DA5',
+  lang:'Catalão (também castelhano e francês)',card:'Carro próprio · Centro a pé',dates:'17 – 19 Mai',
+  greetings:['Bon dia — Bom dia (catalão)','Bona tarda — Boa tarde (catalão)','Gràcies — Obrigado(a) (catalão)','Hola / Gracias — Olá / Obrigado (espanhol, amplamente entendido)','Merci — Obrigado (francês, também entendido)'],
+  customs:['Andorra é um co-principado: governado conjuntamente pelo Presidente da França (Macron) e pelo Bispo de Urgell — o único governo diarquico do mundo.','Sem IVA: Andorra cobra apenas 4,5% de imposto (IGI). Shopping é a principal atração para muitos visitantes.','Moeda: Euro, mas sem ser membro da UE.','Altitude: Andorra la Vella fica a 1.023m — a capital mais alta da Europa. Em maio pode ainda fazer frio nas montanhas.','Estações de ski fechadas em maio, mas trilhas abertas com neve ainda presente nos cumes.'],
+  gastronomy:['Escudella i Carn d\'Olla — Cozido catalão com carne de porco, carneiro e legumes; prato dos Pirineus','Trinxat — Couve e batata amassadas com bacon; comida de montanha reconfortante','Crema Catalana — Creme de baunilha caramelizado; a versão catalã da crème brûlée','Cargols — Caracóis cozidos com ervas e azeite; parte da culinária pirenáica','Vins d\'Andorra — Produção local pequena mas interessante (DOC Andorra)','Cervesa Borda Raubert — A cerveja artesanal local de Andorra'],
+  days:[
+   {date:'2026-05-17',dow:'Domingo',label:'Dia 17',theme:'Chegada · Caldea Spa',att:[
+    {id:'an-ci',t:'18:00',name:'Check-in em Andorra la Vella',type:'accom',dur:'1h',icon:'🏨',
+     tp:'De carro de Barcelona: A-2 → Lleida → N-II → CG-1 (subindo os Pirineus). GPS: Andorra la Vella. Total: ~3h. Estacione no hotel — o centro é a pé.',
+     desc:'Andorra la Vella é a capital mais alta da Europa (1.023m). Compacta e caminhável, o centro comercial (Avinguda Meritxell) é uma das ruas de compras com impostos mais baixos do continente.',
+     tips:'O hotel geralmente oferece estacionamento gratuito — confirme ao reservar. O centro fica a 5-10 min a pé de qualquer hotel.',
+     cur:'Andorra tem o status fiscal negociado em acordos do séc. XIII entre o Conde de Foix e o Bispo de Urgell. A baixa tributação sobreviveu mais de 700 anos.'},
+    {id:'an-cal',t:'19:30',name:'Caldea Spa Termal',type:'leisure',dur:'2h',icon:'♨️',
+     tp:'A pé do hotel (10-15 min). Caldea fica em Les Escaldes, adjacente a Andorra la Vella.',
+     desc:'O maior spa termal dos Pirineus e um dos maiores da Europa. Instalado em torres de vidro modernistas (1994), o complexo tem 6.000 m² de piscinas termais (29-36°C), lagoa exterior com vista para os Pirineus, sauna a vapor, jacuzzis e tratamentos. A água termal tem propriedades minerais únicas das fontes pirenáicas.',
+     tips:'Ingresso básico (3h): €36-42. Reserve online para fins de semana. Leve toalha ou alugue (€5). O acesso básico já inclui todas as piscinas termais e saunas — os pacotes premium têm circuito de talassoterapia extra.',
+     cur:'Caldea foi eleito melhor spa de montanha da Europa em vários anos. As fontes termais de Les Escaldes foram usadas desde o período romano. A água sai naturalmente do subsolo a 70°C.'}
+   ]},
+   {date:'2026-05-18',dow:'Segunda-feira',label:'Dia 18',theme:'Shopping, Montanha e Casa de la Vall',att:[
+    {id:'an-shop',t:'10:00',name:'Compras em Andorra la Vella',type:'leisure',dur:'2h',icon:'🛍️',
+     tp:'A pé do hotel — Avinguda Meritxell é o eixo central.',
+     desc:'Andorra é paraíso de compras sem impostos. A Avinguda Meritxell tem lojas de eletrônicos, perfumes, bebidas alcoólicas, tabaco, joias e moda. Preços significativamente mais baixos que na Espanha e França: perfumes (30-50% mais barato), uísques e cognacs raros, câmeras e eletrônicos.',
+     tips:'Limite de importação ao Brasil (declaração na alfândega): US$500/pessoa. Itens mais vantajosos: perfumes (Chanel, Dior — até 40% abaixo do Brasil), uísques premium (Macallan, Glenfiddich), câmeras (Sony, Canon). Compare preços antes de comprar.',
+     cur:'O status fiscal de Andorra foi negociado em 1278 em acordos entre o Conde de Foix (antecessor da França) e o Bispo de Urgell. Sobreviveu mais de 745 anos de mudanças políticas.'},
+    {id:'an-val',t:'12:00',name:'Casa de la Vall — Parlamento Histórico',type:'att',dur:'1h',icon:'🏛️',
+     tp:'A pé do centro comercial (10 min para o bairro histórico).',
+     desc:'A Casa de la Vall (Casa do Vale) é o edifício histórico mais importante de Andorra — uma casa-torre do séc. XVI que serviu como sede do Parlamento Andorrano de 1702 a 2011. O bairro ao redor tem ruas de pedra medievais.',
+     tips:'Visita guiada (verificar horários). A Igreja de Sant Esteve ao lado é a mais antiga de Andorra la Vella. O bairro antigo contrasta muito com o entorno comercial.',
+     cur:'Andorra tem o sistema de governo mais peculiar do mundo: seu co-príncipe francês é o Presidente eleito (Macron). Quando Macron deixar o cargo, o próximo presidente também se tornará co-príncipe de Andorra automaticamente.'},
+    {id:'an-nat',t:'14:00',name:'Parque Natural de Sorteny',type:'leisure',dur:'3h',icon:'⛰️',
+     tp:'De carro: ~30-40 min de Andorra la Vella (direção norte, CG-3). GPS: Parc Natural de la Vall de Sorteny.',
+     desc:'Andorra tem natureza de montanha extraordinária — 90% do país é área protegida. O Parque Natural de Sorteny tem trilhas com vistas espetaculares dos Pirineus, flora alpina e, com sorte, avistamento de isards (cabras dos Pirineus). Em maio, a neve recua dos cumes e as flores alpinas começam a brotar.',
+     tips:'Trilha até o Estany de l\'Illa (lago de montanha): ~2-3h ida e volta (7 km, 500m de desnível), uma das mais belas vistas de Andorra. Leve calçados fechados — pode haver neve residual. Temperatura nas montanhas em maio: 5-15°C.',
+     cur:'Andorra tem 65 lagos de montanha (estanys). No inverno, as estações de ski (Grandvalira e Vallnord) atraem mais de 10 milhões de esquiadores por ano.'},
+    {id:'an-jan',t:'19:30',name:'Jantar em Andorra',type:'food',dur:'1h30',icon:'🍽️',
+     tp:'A pé do hotel.',
+     desc:'Culinária dos Pirineus: trinxat de la Cerdanya, escudella (cozido catalão) e carn d\'olla. A Borda Estevet e a Font dels Meners são restaurantes tradicionais com excelente culinária de montanha.',
+     tips:'Compre um ou dois vinhos andorranos para levar — a produção é pequena mas interessante (DOC Andorra). Boa oportunidade de comprar bebidas destiladas duty-free antes de partir amanhã.',
+     cur:'A "borda" andorrana é uma casa de campo tradicional dos Pirineus — muitas foram reconvertidas em restaurantes rústicos charmosos que servem a culinária local.'}
+   ]},
+   {date:'2026-05-19',dow:'Terça-feira',label:'Dia 19',theme:'Descida para Barcelona',att:[
+    {id:'an-bcn',t:'10:00',name:'Saída · Viagem para Barcelona',type:'transp',dur:'3h',icon:'🚗',
+     tp:'De carro: Andorra la Vella → Barcelona pela N-145 → C-16 → B-30 → Barcelona. Duração: ~2h45 (200 km). Pedágios: ~€15-20. Use o Parkapp para estacionamento em Barcelona.',
+     desc:'A viagem de Andorra a Barcelona pela N-145 percorre uma das descidas mais espetaculares dos Pirineus — a serra da Cadí com vistas impressionantes da Catalunha se abrindo abaixo.',
+     tips:'Abasteça o carro em Andorra (combustível até 20% mais barato que na Espanha). A passagem pelo Túnel del Cadí (€12,40) encurta o caminho em 1h. Se tiver tempo, pare 30 min em La Seu d\'Urgell — lindo vilarejo medieval.',
+     cur:'La Seu d\'Urgell tem uma das mais belas catedrais românicas da Catalunha (séc. XII) e uma pista de canoagem olímpica das Olimpíadas de Barcelona 1992.'}
+   ]}
+  ]
+ },
+ {
+  id:'barcelona',name:'Barcelona',sub:'',flag:'🇪🇸',country:'Espanha — Catalunha',color:'#A50044',
+  lang:'Catalão e Espanhol',card:'T-Casual metrô (€11,35 / 10 viagens) · Aerobús (€6,75)',dates:'19 – 20 Mai',
+  greetings:['Hola — Olá (espanhol, universalmente entendido)','Bon dia — Bom dia (catalão)','Gràcies — Obrigado (catalão)','Gracias — Obrigado (espanhol)','On és...? — Onde fica...? (catalão)','La cuenta, por favor — A conta, por favor'],
+  customs:['Muitos barceloninos preferem ser chamados de catalães, não espanhóis. Respeite a sensibilidade.','⚠️ Las Ramblas tem nível extremamente alto de carteiristas — guarde carteira e celular com muita atenção.','Jantar: também tardio, entre 21h e 23h. Restaurantes abrem no mínimo às 20h30.','Dizer "gràcies" ao invés de "gracias" é sempre bem recebido pelos locais.'],
+  gastronomy:['Pa amb Tomàquet — Pão com tomate esfregado e azeite; o café da manhã catalão fundamental','Fideuà — Como uma paella mas com macarrão; especialidade catalã/valenciana','Patatas Bravas (com aioli) — Em Barcelona, sempre com maionese de alho, não apenas molho picante','Croquetes de Jamón — As melhores: crocantes por fora e cremosas por dentro','Crema Catalana — A versão catalã da crème brûlée','Cervesa Damm — A cerveja local de Barcelona, refrescante para o calor'],
+  days:[
+   {date:'2026-05-19',dow:'Terça-feira',label:'Dia 19',theme:'Sagrada Família e Bairro Gótico',att:[
+    {id:'bc-ci',t:'13:00',name:'Check-in em Barcelona',type:'accom',dur:'1h',icon:'🏨',
+     tp:'De carro de Andorra. Estacione no hotel ou num parking próximo (app Parclick). Para metrô: compre T-Casual (10 viagens, €11,35) nas máquinas.',
+     desc:'Barcelona: capital da Catalunha, cidade de Gaudí, de praias, gastronomia e arquitetura extraordinária. Com apenas 1 dia, o foco são os pontos essenciais.',
+     tips:'Guarde o carro e use metrô e caminhada — o trânsito e o estacionamento em Barcelona são caóticos e caros no centro.',
+     cur:'Barcelona foi fundada pelos romanos em 15 a.C. como "Barcino". As muralhas romanas do séc. I d.C. ainda existem e podem ser vistas no Barri Gòtic.'},
+    {id:'bc-sf',t:'14:00',name:'Sagrada Família',type:'att',dur:'2h',icon:'⛪',
+     tp:'Metrô Linha 2 ou 5 até Sagrada Família.',
+     desc:'A obra-prima inacabada de Antoni Gaudí — em construção desde 1882, prevista para conclusão em 2030. As colunas internas se ramificam como árvores, criando uma floresta de pedra que filtra luz colorida dos vitrais. As três fachadas: Nascimento (riquíssima em detalhes), Paixão (abstrata e angustiante) e Glória (em construção).',
+     tips:'Ingresso online obrigatório (€26-33). Reserve com MESES de antecedência — esgota com frequência. Subir às torres (adicional) tem vista panorâmica de Barcelona. O interior com colunas arborescentes e vitrais de cores de floresta é a experiência mais extraordinária da cidade.',
+     cur:'Gaudí foi atropelado por um bonde em 1926 e morreu 3 dias depois. O ateliê e os modelos da basílica foram destruídos num incêndio em 1936. Arquitetos reconstruíram os planos a partir de fotografias. Construída inteiramente com doações e ingressos — zero dinheiro público.'},
+    {id:'bc-got',t:'17:00',name:'Bairro Gótico e Las Ramblas',type:'att',dur:'2h',icon:'🏛️',
+     tp:'Metrô Linha 4 de Sagrada Família até Jaume I (15 min).',
+     desc:'O Barri Gòtic: labirinto de ruas medievais com a Catedral de Barcelona (séc. XIV), a Plaça Reial (palmeiras e fachadas neoclássicas), o Pont del Bisbe (ponte medieval fotogênica) e restos de muralhas romanas do séc. I d.C. Las Ramblas é o bulevar mais famoso de Barcelona — 1,2 km do centro ao Port Vell, com quiosques, cafés e artistas.',
+     tips:'⚠️ ATENÇÃO nas Ramblas: altíssimo nível de carteiristas. Segure bolsa na frente, não use celular nas calçadas. Para tapas de qualidade, vá ao Barri Gòtic ou El Born — muito melhores e menos turísticos.',
+     cur:'O Mercat de La Boqueria nas Ramblas foi fundado em 1217. O Barri Gòtic tem ruas medievais com a mesma configuração de mais de 700 anos — e muros romanos de 2.000 anos.'},
+    {id:'bc-dj',t:'21:00',name:'Jantar em El Born',type:'food',dur:'1h30',icon:'🍷',
+     tp:'A pé do Barri Gòtic (5 min sentido mar).',
+     desc:'El Born é o bairro mais cool de Barcelona: galerias, bares de coctéis, restaurantes criativos e a Basílica de Santa Maria del Mar. Para um jantar autêntico catalão, este é o lugar.',
+     tips:'El Xampanyet (taberna histórica, excelente cava), Bar del Pla (tapas modernas), Tantarantana (comida catalã). Reserve com antecedência para as 21h.',
+     cur:'A Basílica de Santa Maria del Mar (1329-1383) foi construída pelo povo do bairro da Ribera — os carregadores do porto trabalhavam de graça nos dias de folga. É considerada o mais belo gótico catalão.'}
+   ]},
+   {date:'2026-05-20',dow:'Quarta-feira',label:'Dia 20',theme:'Manhã em Barcelona · Voo para Lisboa',att:[
+    {id:'bc-pg',t:'09:00',name:'Park Güell ou Passeig de Gràcia',type:'att',dur:'1h30',icon:'🦎',
+     tp:'Park Güell: Metrô Linha 3 até Lesseps + 20 min a pé subindo. Passeig de Gràcia: Metrô Linhas 2/3/4.',
+     desc:'Duas opções: Park Güell — o parque de Gaudí com mosaicos coloridos, salamandras e terraço com vista de Barcelona (€10, reserve online, vai de manhã cedo para menos filas). Ou Passeig de Gràcia — a avenida mais glamourosa com a Casa Batlló (€35) e La Pedrera (€28) de Gaudí.',
+     tips:'Se o voo for de tarde e tiver pressa: apenas caminhe pelo Passeig de Gràcia e fotografe as fachadas de Gaudí de fora — é grátis e já vale muito.',
+     cur:'Gaudí foi atropelado e morto perto do Park Güell em 1926. Por estar vestindo roupas simples, os transeuntes o confundiram com um mendigo — só foi identificado horas depois no hospital.'},
+    {id:'bc-fly',t:'11:30',name:'Aeroporto de Barcelona · Voo para Lisboa',type:'transp',dur:'3h30',icon:'✈️',
+     tp:'Aerobús: da Plaça de Catalunya até o Aeroporto El Prat T1 ou T2 (35-40 min, €6,75). Ou de carro: devolver na locadora do aeroporto. Voo BCN → LIS. Duração: ~2h.',
+     desc:'De Barcelona, voo direto para Lisboa. Em Lisboa: Metrô Linha Vermelha do aeroporto até Alameda → Linha Verde até Cais do Sodré ou Baixa-Chiado (45 min, €1,70). Compre o Cartão Viva Viagem (€0,50) + Zapping.',
+     tips:'O Cartão Viva Viagem com Zapping cobre metrô, elétricos, ônibus e ferries (€1,60/viagem). Instale o app Carris/Metropolitano para navegação no transporte público de Lisboa.',
+     cur:'Lisboa é a mais ocidental das capitais continentais europeias e uma das mais antigas do mundo — mais antiga que Roma.'}
+   ]}
+  ]
+ },
+ {
+  id:'lisbon',name:'Lisboa',sub:'',flag:'🇵🇹',country:'Portugal',color:'#006600',
+  lang:'Português',card:'Cartão Viva Viagem (€0,50) + Zapping (€1,60/viagem)',dates:'20 – 22 Mai',
+  greetings:['Olá / Bom dia — Olá / Bom dia','Obrigado(a) — Thank you','Por favor — Por favor','Com licença — Com licença','Quanto custa? — Quanto custa?','A conta, por favor — A conta, por favor','Boa tarde / Boa noite — Boa tarde / Boa noite'],
+  customs:['Lisboa é muito acolhedora com brasileiros — o idioma facilita imensamente, embora o sotaque e vocabulário difiram.','Fado: ir a uma casa de fado em Alfama é uma experiência emocional única — os portugueses levam a sério.','Pastel de Nata: comer um morno, polvilhado de canela, em pé no balcão é um ritual cultural.','Elétrico 28E: icônico mas lotado de turistas e carteiristas. Use o 15E (moderno) para Belém.','Saudade: o conceito português de nostalgia melancólica — central à identidade portuguesa e ao fado.'],
+  gastronomy:['Pastel de Nata — Creme de gema de ovo em massa folhada; os originais são da Fábrica de Pastéis de Belém (desde 1837)','Bacalhau à Brás — Bacalhau desfiado com batatas palha, ovos e azeitonas; o mais popular de Lisboa','Bifanas — Sandes (sanduíche) de fatias de porco marinadas; o fast food português por excelência','Sardinhas assadas — Tradicionais nas festas de junho; disponíveis nos restaurantes de Alfama','Ginjinha — Licor de cereja ácida; bebida de rua em coplizinhos por €1-2 nas ginjinhas de Alfama','Caldo Verde — Sopa de couve galega com chouriço; reconfortante e deliciosa'],
+  days:[
+   {date:'2026-05-20',dow:'Quarta-feira',label:'Dia 20',theme:'Chegada · Baixa e Castelo',att:[
+    {id:'li-ci',t:'15:00',name:'Check-in em Lisboa',type:'accom',dur:'1h',icon:'🏨',
+     tp:'Do aeroporto (LIS): Metrô Linha Vermelha → Alameda → baldeação Linha Verde → Baixa-Chiado ou Cais do Sodré (45 min, €1,70). Compre Cartão Viva Viagem (€0,50) + Zapping.',
+     desc:'Lisboa: construída em 7 colinas sobre o Rio Tejo, com elétricos amarelos, miradouros de tirar o fôlego e uma atmosfera única de cidade entre a nostalgia do passado e a modernidade vibrante. Capital do país que no séc. XV-XVI comandou o maior império marítimo do mundo.',
+     tips:'O Viva Viagem com Zapping cobre metrô, elétricos, ônibus e ferries (€1,60/viagem). Instale o app Carris/Metropolitano.',
+     cur:'Lisboa é mais antiga que Roma. Os mouros dominaram a cidade por quase 400 anos (714-1147), e sua influência na arquitetura e nos nomes ainda é visível. Alfama vem do árabe "al-hamma" (as termas).'},
+    {id:'li-baixa',t:'16:00',name:'Baixa Pombalina e Praça do Comércio',type:'att',dur:'1h30',icon:'🏛️',
+     tp:'A pé do hotel (se no Chiado) ou Metrô até Baixa-Chiado.',
+     desc:'A Baixa Pombalina é a parte plana de Lisboa — grelha ortogonal de ruas reconstruída pelo Marquês de Pombal após o Terremoto de 1755 (que destruiu 85% da cidade). A Praça do Comércio (Terreiro do Paço) abre para o Rio Tejo: o arco triunfal e a estátua equestre de D. José I são imponentes. O Rio Tejo aqui parece um mar.',
+     tips:'Tome uma Ginjinha no Largo de São Domingos (logo acima da Baixa): €1,50. Rito de passagem em Lisboa. Caminhe pela Rua Augusta até a Praça para a perspectiva completa.',
+     cur:'O Terremoto de Lisboa de 1 de novembro de 1755 foi seguido de tsunami e incêndios. O Marquês de Pombal respondeu pragmaticamente: "Enterrem os mortos e cuidem dos vivos" — reconstruiu a cidade em linhas modernas e antisísmicas.'},
+    {id:'li-cast',t:'17:30',name:'Castelo de São Jorge',type:'att',dur:'1h30',icon:'🏰',
+     tp:'Elétrico 12E da Praça da Figueira até Castelo (€3,00 com Viva Viagem). Ou caminhada de 20 min pela Alfama (subida íngreme).',
+     desc:'A fortaleza mourisca que coroa a colina mais alta de Lisboa, com vista panorâmica de 360° sobre a cidade, o Tejo e a Ponte 25 de Abril. Construída pelos mouros no séc. XI, conquistada por D. Afonso Henriques em 1147 com ajuda de cruzados. O interior tem jardins medievais com pavões.',
+     tips:'Ingresso: €15. Melhor momento: 1h antes do fechamento, com luz dourada sobre a cidade abaixo. O miradouro nas ameias é a vista mais famosa de Lisboa. Explore a Alfama ao redor.',
+     cur:'Alfama é o único bairro de Lisboa que sobreviveu ao terremoto de 1755 relativamente intacto — sua topografia irregular resistiu melhor ao tsunami. Hoje é o bairro do fado e dos gatos.'},
+    {id:'li-fado',t:'21:00',name:'Jantar e Fado em Alfama',type:'food',dur:'2h',icon:'🎸',
+     tp:'A pé do Castelo descendo pela Alfama.',
+     desc:'O fado é a alma musical de Portugal — canção de melancolia, saudade e destino, reconhecida pela UNESCO como Patrimônio Imaterial da Humanidade (2011). O fadista canta acompanhado de viola portuguesa (12 cordas) e viola baixo.',
+     tips:'Casas de fado recomendadas em Alfama: Tasca do Chico (íntima, ~€25 consumo mínimo), A Baiuca (mais autêntica, reserva difícil), Sr. Vinho. EVITE os restaurantes com néon "Fado" nas Ramblas (Rua Augusta) — são turísticos e o fado é encenado.',
+     cur:'A origem do fado mistura influências árabes, africanas (do lundum brasileiro!), medievais e ciganas de Lisboa do séc. XIX. Amália Rodrigues (1920-1999), a "Rainha do Fado", ainda faz pessoas chorarem com suas gravações.'}
+   ]},
+   {date:'2026-05-21',dow:'Quinta-feira',label:'Dia 21',theme:'Belém — Torre, Mosteiro e Pastéis',att:[
+    {id:'li-bel',t:'09:30',name:'Fábrica de Pastéis de Belém',type:'food',dur:'45min',icon:'🥐',
+     tp:'Elétrico 15E de Praça da Figueira (Baixa) até Belém (30 min, €3,00 com Viva Viagem). O 15E é moderno — mais confortável e seguro para bolsas que o histórico 28E.',
+     desc:'A Fábrica de Pastéis de Belém (fundada em 1837) é onde nasceu o pastel de nata original, feito com a receita secreta dos monges do Mosteiro dos Jerónimos ao lado. A fila às vezes chega à rua, mas a rotatividade é rápida. Coma na hora, polvilhado de canela e açúcar.',
+     tips:'Peça "dois pastéis com canela, por favor" (dois custam ~€2,40). A receita original é mantida em segredo — apenas 3 funcionários a conhecem integralmente. As outras casas de nata em Portugal são deliciosas mas diferentes.',
+     cur:'O Pastel de Nata foi criado pelos monges jerónimos no séc. XVIII como forma de usar as claras de ovo que sobravam do amido das roupas religiosas. Quando o mosteiro fechou (1820), venderam a receita a um comerciante local.'},
+    {id:'li-jer',t:'10:30',name:'Mosteiro dos Jerónimos',type:'att',dur:'1h30',icon:'⛪',
+     tp:'A pé da Fábrica de Pastéis de Belém (5 min).',
+     desc:'O maior e mais suntuoso monumento do estilo manuelino português — o "barroco da pedra" que funde gótico com elementos náuticos e exóticos das descobertas marítimas. Construído a partir de 1501 por ordem de D. Manuel I para celebrar a viagem de Vasco da Gama. Aqui estão os túmulos de Vasco da Gama e de Luís de Camões (o maior poeta português).',
+     tips:'Ingresso: €15 (gratuito até 12h nos domingos). A ala da Igreja (com os túmulos) é de graça — entre pela porta lateral. O Claustro é o ponto mais fotografado e vale cada euro do ingresso.',
+     cur:'A expressão "Manuelino" vem do rei D. Manuel I (1469-1521) — o "rei venturoso" que reinou durante o auge do império marítimo. O estilo mistura gótico tardio com elementos náuticos: cordas, âncoras, esferas armilares e exotica das descobertas.'},
+    {id:'li-torre',t:'12:30',name:'Torre de Belém',type:'att',dur:'45min',icon:'🏰',
+     tp:'A pé do Mosteiro (15 min ao longo do Tejo pela Avenida da Índia).',
+     desc:'O símbolo mais icônico de Lisboa e da era das Descobertas. Construída entre 1516 e 1521 no estilo manuelino, no meio do Rio Tejo, servia de porta de entrada marítima a Lisboa. É aqui que os navegadores portugueses partiam para "navegar mares nunca antes navegados" (Camões). A torre combina função defensiva com decoração elaborada: gargoilas de rinocerontes (o primeiro rinoceronte a chegar à Europa veio de Portugal), janelas rendilhadas e ameias em forma de escudos.',
+     tips:'Ingresso: €15 (ou passe conjunto com o Mosteiro por €25). Espere fila — a torre é pequena e estreita. Se preferir a vista de fora, é já imperdível. Maré baixa expõe a base da torre — se houver, a vista é diferente.',
+     cur:'O rinoceronte que aparece na escultura da Torre de Belém foi o presente de um sultão indiano ao Rei D. Manuel I em 1515 — o primeiro visto na Europa em mais de 1.000 anos. Quando morreu em naufrágio, o rei mandou embalsamar o animal e enviou a pele para o Papa.'},
+    {id:'li-lx',t:'15:00',name:'LX Factory e Tarde em Lisboa',type:'leisure',dur:'2h',icon:'🎨',
+     tp:'Elétrico 15E de volta da Torre até LX Factory (parada Calvário) — ou táxi/Bolt (~€8).',
+     desc:'A LX Factory é o complexo criativo mais interessante de Lisboa: uma antiga fábrica têxtil do séc. XIX transformada em espaço com restaurantes, lojas de design, galerias de arte, livrarias e um mercado aos domingos. É onde a Lisboa cool e criativa se reúne.',
+     tips:'Se for domingo: o Mercado da LX Factory é extraordinário (das 10h às 18h). Em qualquer dia: a Livraria Ler Devagar (com bicicleta suspensa no teto) é uma das livrarias mais bonitas do mundo. Para jantar: o Rio Maravilha na cobertura tem vista incrível para o Tejo e o 25 de Abril.',
+     cur:'A LX Factory foi Fábrica de Tecelagem Lisbonense de 1846 a 1996. Abandonada, foi reinventada em 2008 como espaço criativo — um modelo que inspira projetos similares no mundo todo.'},
+    {id:'li-mirad',t:'18:00',name:'Miradouro de Santa Catarina ou Alfama ao entardecer',type:'att',dur:'1h30',icon:'🌅',
+     tp:'Elétrico 28E ou caminhada até o Chiado/Bica.',
+     desc:'Lisboa tem os melhores miradouros da Europa. O Miradouro de Santa Catarina (Adamastor) e o Miradouro das Portas do Sol (em Alfama) são perfeitos para o pôr do sol com vista do Tejo, da Ponte 25 de Abril e do Cristo Rei do outro lado.',
+     tips:'O pôr do sol em Lisboa em maio é por volta das 21h. Os miradouros ficam lotados de locais com cerveja e ginjinha ao entardecer — junte-se a eles.',
+     cur:'Lisboa tem mais de 70 miradouros oficiais — mais que qualquer outra capital europeia. A Ponte 25 de Abril (inaugurada em 1966 como Ponte Salazar) é quase idêntica à Golden Gate de São Francisco — construída pela mesma empresa, a American Bridge Company.'}
+   ]},
+   {date:'2026-05-22',dow:'Sexta-feira',label:'Dia 22',theme:'Manhã em Lisboa · Partida para Madri',att:[
+    {id:'li-al',t:'09:00',name:'Alfama de manhã — Feira da Ladra (se for terça ou sábado)',type:'leisure',dur:'1h30',icon:'🛍️',
+     tp:'Elétrico 28E até Portas do Sol. Ou caminhada de 20 min da Baixa.',
+     desc:'Alfama de manhã é mágica: antes dos turistas chegarem, o bairro tem um ritmo tranquilo. A Feira da Ladra (mercado de antiguidades e usados) acontece às terças e sábados no Campo de Santa Clara — um dos mercados mais charmosos de Lisboa.',
+     tips:'Compre souvenirs em Alfama: azulejos (€5-15 por peça), lata de sardinhas decorativas (€3-8), ginja em garrafa, produtos de cortiça. Evite lojas nas Ramblas — prefira o Chiado ou a Feira da Ladra.',
+     cur:'Os azulejos portugueses têm origem árabe — "al-zulaij" (a pedra lisa e polida). Portugal desenvolveu uma tradição de azulejos de azul e branco no séc. XVII, influenciada pela porcelana chinesa.'},
+    {id:'li-mad',t:'12:00',name:'Partida para Madri',type:'transp',dur:'5h',icon:'✈️',
+     tp:'Do hotel para o Aeroporto de Lisboa (LIS): Metrô Linha Verde/Azul → Aeroporto (40-45 min, €1,70). Voo LIS → MAD. Duração: ~1h45. Aeroporto: Humberto Delgado (LIS).',
+     desc:'Retorno a Madri para a fase final da viagem — dois dias na segunda parte da capital espanhola, incluindo o icônico Mercado del Rastro.',
+     tips:'Em Madri, o hotel fica em Lavapiés (Calle dos Hermanas). Do Aeroporto de Barajas para Lavapiés: Metrô Linha 8 → Nuevos Ministerios → Linha 3 até Lavapiés (€5,00 total, ~60 min).',
+     cur:'O bairro de Lavapiés em Madri é o mais multicultural e boêmio da cidade — mistura de culturas africanas, asiáticas, sul-americanas e a tradição madrileña do bairro operário.'}
+   ]}
+  ]
+ },
+ {
+  id:'madrid2',name:'Madrid',sub:'Parte 2',flag:'🇪🇸',country:'Espanha',color:'#8B0000',
+  lang:'Espanhol',card:'Tarjeta Multi (€12,20 / 10 viagens)',dates:'22 – 25 Mai',
+  greetings:['¡Hola! — Olá','¡Hasta luego! — Até logo (despedida)','¡Qué guay! — Que legal! (gíria madrileña)','¡Mola! — É fixe / é ótimo (gíria)','¿Qué tal? — Como vai?','¡Venga! — Vamos! / Ok! (expressão muito usada)'],
+  customs:['Lavapiés é o bairro mais multicultural de Madri — prepare-se para uma mistura de culturas, cheiros e músicas de todo o mundo.','O Rastro (domingo) é mais que um mercado — é um ritual social dos madrilenos que vai às compras e depois ao bar ao lado para o vermut.','O Triângulo da Arte (Prado, Reina Sofía, Thyssen) é o conjunto museológico mais denso da Europa — três museus de classe mundial num raio de 1 km.','Vermut: a tradição do vermut de domingo (vermú) é muito praticada em Lavapiés e La Latina — visite os bares às 13h-14h.'],
+  gastronomy:['Vermut com tapas — A tradição do domingo madrileno: vermouth, olivas e patatitas nos bares de La Latina e Lavapiés','Bocadillo de Calamares — Revisitar o sanduíche mais madrileño na Plaza Mayor','Patatas Bravas no El Brillante — Próximo ao Reina Sofia, um clássico irresistível','Churros no San Ginés — A chocolatería mais famosa de Madri, desde 1894','Rabo de Toro — Cauda de touro cozida lentamente em vinho; prato típico madrileno','Tortilla Española — A melhor de Madri dizem que é no Bar Nestor em San Sebastián, mas em Madri tente o Mercado de San Miguel'],
+  days:[
+   {date:'2026-05-22',dow:'Sexta-feira',label:'Dia 22',theme:'Chegada em Lavapiés · Tarde no Bairro',att:[
+    {id:'m2-ci',t:'15:00',name:'Check-in em Lavapiés — Calle dos Hermanas',type:'accom',dur:'1h',icon:'🏨',
+     tp:'Do aeroporto Barajas: Metrô Linha 8 → Nuevos Ministerios → baldeação Linha 3 (amarela) até Lavapiés. ~60 min, €5,00 (tarifa especial aeroporto).',
+     desc:'Lavapiés é o bairro mais multicultural e boêmio de Madri: casas de vecinos (pátios internos coletivos), teatros alternativos, bares de cerveja artesanal, tabernas com flamenco e a maior concentração de comunidades imigrantes da capital. É o Madri mais autêntico e menos turístico.',
+     tips:'Explore o bairro a pé: Calle de Argumosa, Plaza de Lavapiés, Calle del Mesón de Paredes. Ótimo para uma cerveza artesanal num bar local ao final da tarde.',
+     cur:'O nome "Lavapiés" (lava-pés) vem da fonte pública onde, segundo a tradição, os judeus e mouros lavavam os pés antes de entrar na antiga juderia. O bairro foi um dos principais redutos judeus de Madri antes de 1492.'},
+    {id:'m2-lav',t:'16:00',name:'Passeio em Lavapiés e aperitivo',type:'leisure',dur:'2h',icon:'🍺',
+     tp:'A pé — o bairro é todo percorrível.',
+     desc:'Tarde livre para absorver o ritmo de Lavapiés: casas de vecinos com pátios internos (algumas abertas ao público), o teatro Valle-Inclán, a Tabacalera (antiga fábrica de tabaco reconvertida em espaço cultural) e os bares locais com pintura mural nas paredes.',
+     tips:'O Mercado de Antón Martín (próximo, 5 min a pé) é um mercado local com ótimas barracas de comida e tapas. O Café Barbieri (a mais antiga tasca de Lavapiés) é um clássico local.',
+     cur:'A Tabacalera de Madri foi uma fábrica de tabaco real (Real Fábrica de Tabacos de Madrid) do séc. XVIII. Hoje é um dos maiores centros de arte urbana da Europa, com murais de artistas renomados.'}
+   ]},
+   {date:'2026-05-23',dow:'Sábado',label:'Dia 23',theme:'Triângulo da Arte — Reina Sofía e Thyssen',att:[
+    {id:'m2-rs',t:'10:00',name:'Museu Reina Sofía',type:'att',dur:'2h30',icon:'🎨',
+     tp:'A pé do hotel (10 min — o Reina Sofía fica a 10 min a pé de Lavapiés). Metrô Linha 3 até Atocha Renfe.',
+     desc:'O museu de arte moderna e contemporânea mais importante da Espanha, instalado num antigo hospital do séc. XVIII. A coleção cobre o séc. XX e XXI com foco em artistas espanhóis: Picasso, Dalí, Miró, Tàpies. A obra mais importante: "Guernica" de Picasso (1937) — uma das pinturas mais poderosas da história, criada como protesto ao bombardeio da cidade basca de Guernica durante a Guerra Civil Espanhola.',
+     tips:'Ingresso: €12 (gratuito das 19h às 21h em dias úteis e manhãs de domingo). O "Guernica" fica na Sala 206 do Edificio Sabatini — imponente, enorme (7,76m × 3,49m). Reserve tempo para ver as obras ao redor que contextualizam a criação da obra.',
+     cur:'"Guernica" foi pintada por Picasso em apenas 35 dias após o bombardeio. Viveu fora de Espanha (no MoMA de Nova Iorque) de 1939 a 1981 — Picasso exigiu que só voltasse quando a Espanha fosse uma democracia. Franco morreu em 1975 e a democracia foi restaurada em 1978.'},
+    {id:'m2-thy',t:'13:30',name:'Almoço + Museu Thyssen-Bornemisza',type:'att',dur:'2h30',icon:'🖼️',
+     tp:'A pé do Reina Sofía (5 min pelo Paseo del Prado).',
+     desc:'O terceiro vértice do Triângulo da Arte de Madri. A coleção do Barão Heinrich Thyssen-Bornemisza cobre 7 séculos de história da arte europeia e americana: Van Eyck, Caravaggio, Hals, Dürer, Rubens, Monet, Van Gogh, Degas, Picasso, Edward Hopper, Dalí e artistas americanos do séc. XX. Instalado num palácio neoclássico de 1771.',
+     tips:'Ingresso: €13 (gratuito às segundas-feiras). A coleção de primitivos flamengos (séculos XV-XVI) é extraordinária. As obras de Edward Hopper (americano) são surpreendentemente comoventes.',
+     cur:'A coleção Thyssen é considerada a maior coleção privada de arte do mundo ainda coesa. O Barão Thyssen casou-se com uma espanhola (Carmen Cervera) e doou a coleção à Espanha nos anos 90.'},
+    {id:'m2-retin',t:'19:00',name:'Parque del Retiro ao entardecer',type:'att',dur:'1h30',icon:'🌿',
+     tp:'A pé do Thyssen (15 min pelo Paseo del Prado). Ou Metrô Linha 2 até Retiro (1 parada).',
+     desc:'O maior e mais amado parque de Madri — 118 hectares no coração da cidade. O Palácio de Cristal (1887), um palácio de vidro e ferro, é um dos pontos mais fotogênicos. O lago central tem barcos a remo. Aos fins de semana, músicos, malabaristas e famílias inteiras enchem o parque.',
+     tips:'Alugue um barco a remo no lago (€6 por 45 min). O Palácio de Cristal é gratuito e costuma ter exposições de arte contemporânea. As rosas no Rosaleda estão florescendo em maio — belíssimas.',
+     cur:'O Retiro foi jardim real privado até 1868, quando foi aberto ao público pela Rainha Isabel II. Em 1872, El Ayuntamiento (câmara municipal) adquiriu o parque.'}
+   ]},
+   {date:'2026-05-24',dow:'Domingo',label:'Dia 24',theme:'El Rastro — O Melhor de Madri',att:[
+    {id:'m2-ras',t:'09:30',name:'Mercado del Rastro',type:'att',dur:'2h30',icon:'🛍️',
+     tp:'A pé do hotel (5-10 min — o Rastro ocorre nas ruas ao redor do hotel, em Lavapiés / La Latina). Principal eixo: Calle de la Ribera de Curtidores.',
+     desc:'O El Rastro é o maior e mais famoso mercado de pulgas e antiquários da Espanha — e possivelmente um dos maiores da Europa. Ocorre todo domingo das 9h às 15h, com mais de 3.500 barracas espalhadas pelas ruas de Lavapiés e La Latina. Vende-se de tudo: antiguidades, roupas vintage, vinil, livros usados, bugigangas, artesanato, ferramentas, arte e bibelôs curiosos de toda a sorte.',
+     tips:'Chegue cedo (antes das 10h) para os melhores achados. O mercado fica cada vez mais lotado até as 13h. Após o mercado, siga os madrilenos para o ritual do vermut nos bares da Calle de la Cava Baja — é a parte mais agradável do domingo madrileno. Cuidado com carteiristas em multidões.',
+     cur:'El Rastro tem história de mais de 500 anos — surgiu do matadeiro medieval que existia nessa área (rastro = rasto, de sangue de animais). Hoje é o maior evento de socialização semanal de Madri: milhares de pessoas, locais e turistas, misturadas nas ruas estreitas.'},
+    {id:'m2-verm',t:'13:00',name:'Vermut de domingo em La Latina',type:'food',dur:'1h30',icon:'🍷',
+     tp:'A pé do Rastro (5 min)',
+     desc:'O vermut de domingo (vermú) é uma das tradições mais queridas de Madri: um vermouth italiano (Cinzano, Martini ou um vermut espanhol como o Lustau) com gelo, azeitona e uma rodada de tapas. A Calle de la Cava Baja e as ruas ao redor da Plaza de la Paja são o epicentro desta tradição.',
+     tips:'Bar El Viajero (Plaza de la Cebada) tem terraço com vista e ótimo ambiente. Taberna Tempranillo (Calle de la Cava Baja) tem excelente seleção de vermuts e vinhos espanhóis. O ritual é lento — sentar, pedir, beliscar tapas, pedir de novo.',
+     cur:'O vermut (vermouth) é um vinho aromatizado com ervas e especiarias — inventado na Itália no séc. XVIII. A Espanha adotou o ritual do vermut no séc. XIX e o transformou numa tradição cultural tão forte quanto o café.'},
+    {id:'m2-gran',t:'16:00',name:'Gran Vía e Despedida de Madri',type:'leisure',dur:'2h',icon:'🌆',
+     tp:'Metrô Linha 3 de La Latina até Gran Vía (2 paradas, €1,50).',
+     desc:'A Gran Vía é o bulevar mais icônico de Madri — construído entre 1910 e 1932, substituiu ruas medievais por uma avenida de 1,3 km com edifícios de arquitetura eclética impressionante. É o coração do teatro e do entretenimento de Madri, com musicais do West End espanhol.',
+     tips:'Caminhe da Plaza de España até a Calle de Alcalá para ver todos os edifícios icônicos: o Edificio Metropolis (1911), o Edificio Grassy, o Palacio de la Prensa. Para a última noite, considere um musical no Teatro Lara ou um jantar no El Cisne Azul.',
+     cur:'A Gran Vía foi chamada pelos madrilenos de "la Gran Vía del Señor Palanca" durante sua construção interminável (22 anos). Hoje é uma das avenidas mais fotografadas da Espanha.'},
+    {id:'m2-noite',t:'21:00',name:'Última noite em Madri',type:'food',dur:'2h',icon:'🌙',
+     tp:'A pé ou Metrô dependendo do destino escolhido.',
+     desc:'A última noite na Europa! Madri é perfeita para isso: a cidade não dorme. As opções: jantar no Sobrino de Botín (o restaurante mais antigo do mundo em atividade, Guinness, fundado em 1725 — cochinillo assado, ~€50/pessoa), drinks no Barrio de las Letras (bairro dos escritores, mais tranquilo), ou a experiência típica de começar em bares de tapas e ir subindo o nível até de madrugada.',
+     tips:'O Sobrino de Botín PRECISA de reserva com antecedência. Alternativa mais econômica: bares de tapas do Barrio de las Letras (Calle de las Huertas e arredores) com rabo de toro e vinho da casa.',
+     cur:'O Sobrino de Botín (fundado em 1725) aparece no romance "O Sol Também se Levanta" de Ernest Hemingway. Hemingway era um frequentador assíduo de Madri e um apaixonado pela cultura espanhola.'}
+   ]},
+   {date:'2026-05-25',dow:'Segunda-feira',label:'Dia 25',theme:'Retorno ao Brasil',att:[
+    {id:'m2-home',t:'',name:'Retorno ao Brasil',type:'transp',dur:'',icon:'✈️',
+     tp:'Aeroporto Barajas (MAD): Metrô Linha 8 de qualquer estação do centro → Aeropuerto. €5,00 (tarifa especial). Saia com 3h+ de antecedência para voos intercontinentais.',
+     desc:'Fim da viagem europeia! Após 25 dias percorrendo 10 países e territórios, com histórias, fotos e experiências que durarão para sempre.',
+     tips:'Nos voos de volta, declare suas compras à alfândega brasileira. O limite de isenção é US$500/pessoa vindas de zonas duty-free. Acima disso, há tributação de 50%.',
+     cur:'Você percorreu: Espanha (2×), Reino Unido, França (2×), Mônaco, Itália, San Marino, Malta, Andorra e Portugal — 10 países ou territórios em 25 dias. Uma conquista!'}
+   ]}
+  ]
+ }
+];
+
+// ═══════════════════════════════════════
+// INDEX + STATE
+// ═══════════════════════════════════════
+const idx = {};
+D.forEach(dest => dest.days.forEach(day => day.att.forEach(a => { idx[a.id] = {a, dest, day}; })));
+
+let view = 'list';
+
+// ═══════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════
+function renderSB() {
+  document.getElementById('sbNav').innerHTML = D.map(d =>
+    `<div class="nav-item" style="border-left-color:${d.color}" onclick="goTo('${d.id}')">
+      <div class="nav-flag">${d.flag}</div>
+      <div class="nav-info">
+        <div class="nav-name">${d.name}${d.sub ? ' · ' + d.sub : ''}</div>
+        <div class="nav-dates">${d.dates}</div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════
+// VIEW TOGGLE
+// ═══════════════════════════════════════
+function setView(v) {
+  view = v;
+  document.getElementById('btnL').classList.toggle('on', v === 'list');
+  document.getElementById('btnC').classList.toggle('on', v === 'cal');
+  render();
+}
+
+function render() { view === 'list' ? renderList() : renderCal(); }
+
+// ═══════════════════════════════════════
+// LIST VIEW
+// ═══════════════════════════════════════
+function renderList() {
+  document.getElementById('main').innerHTML =
+    `<div class="lv">${D.map(renderDest).join('')}</div>`;
+}
+
+function renderDest(d) {
+  return `<div class="dest-block" id="d-${d.id}">
+    <div class="dest-head">
+      <div class="dest-bar" style="background:${d.color}"></div>
+      <div class="dest-flag">${d.flag}</div>
+      <div class="dest-info">
+        <div class="dest-label">${d.country}${d.sub ? ' · ' + d.sub : ''}</div>
+        <div class="dest-name">${d.name}</div>
+        <div class="dest-dates">${d.dates}</div>
+        <div class="dest-tags">
+          <span class="tag">🗣 ${d.lang}</span>
+          <span class="tag">💳 ${d.card}</span>
+        </div>
+      </div>
+    </div>
+    <div class="cult-toggle" onclick="toggleCult('${d.id}')">
+      <span>🌍</span>
+      <span class="cult-toggle-txt">Cultura, idioma, gastronomia e dicas locais</span>
+      <span class="cult-arr" id="arr-${d.id}">▼</span>
+    </div>
+    <div class="cult-panel" id="cult-${d.id}">
+      <div class="cult-grid">
+        <div class="cult-sec"><h4>🗣 Idioma & Cumprimentos</h4><ul>${d.greetings.map(g=>`<li>${g}</li>`).join('')}</ul></div>
+        <div class="cult-sec"><h4>🍽 Gastronomia Local</h4><ul>${d.gastronomy.map(g=>`<li>${g}</li>`).join('')}</ul></div>
+        <div class="cult-sec" style="grid-column:1/-1"><h4>💡 Costumes e Dicas Culturais</h4><ul>${d.customs.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+    ${d.days.map(day => renderDay(day, d.color)).join('')}
+  </div>`;
+}
+
+function renderDay(day, color) {
+  return `<div class="day-block">
+    <div class="day-head">
+      <div class="day-badge" style="background:${color}">${day.label.replace('Dia ','')}</div>
+      <div class="day-info">
+        <div class="day-date">${day.label} — ${day.dow}, ${fmtDate(day.date)}</div>
+        <div class="day-theme">${day.theme}</div>
+      </div>
+    </div>
+    <div class="tl">
+      ${day.att.map(a => `
+        <div class="tl-item">
+          <div class="tl-dot" style="background:${color}"></div>
+          <div class="ac" onclick="openMo('${a.id}')">
+            <div class="ac-time">${a.t}</div>
+            <div class="ac-icon">${a.icon}</div>
+            <div class="ac-cnt">
+              <div class="ac-name">${a.name}</div>
+              <div class="ac-dur">${a.dur ? '⏱ ' + a.dur : ''}</div>
+              ${a.tp ? `<div class="ac-tp">📍 ${a.tp.substring(0,90)}${a.tp.length>90?'…':''}</div>` : ''}
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// CALENDAR VIEW
+// ═══════════════════════════════════════
+function renderCal() {
+  const evMap = {};
+  D.forEach(dest => dest.days.forEach(day => { if (!evMap[day.date]) evMap[day.date] = {dest, day}; }));
+  const firstDay = new Date('2026-05-01').getDay(); // 4 = Thursday
+
+  let html = `<div class="cv">
+    <div class="cal-head">
+      <div class="cal-month">Maio</div>
+      <div class="cal-year">2026</div>
+    </div>
+    <div class="legend">${D.map(d=>`<div class="leg-item"><div class="leg-dot" style="background:${d.color}"></div><span>${d.flag} ${d.name}${d.sub?' · '+d.sub:''}</span></div>`).join('')}</div>
+    <div class="cal-grid">
+      ${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(w=>`<div class="cal-wd">${w}</div>`).join('')}
+      ${''.padStart(firstDay).split('').map(()=>`<div class="cal-day empty"></div>`).join('')}`;
+
+  for (let d = 1; d <= 31; d++) {
+    const ds = `2026-05-${String(d).padStart(2,'0')}`;
+    const ev = evMap[ds];
+    if (ev) {
+      const {dest, day} = ev;
+      html += `<div class="cal-day live" onclick="jumpTo('${ds}')" style="border-top:3px solid ${dest.color}">
+        <div class="cal-dn">${d}</div>
+        <div class="cal-city" style="color:${dest.color}">${dest.flag} ${dest.name}</div>
+        ${day.att.slice(0,3).map(a=>`<div class="cal-ev" style="background:${dest.color}dd">${a.icon} ${a.name.substring(0,18)}${a.name.length>18?'…':''}</div>`).join('')}
+      </div>`;
+    } else {
+      html += `<div class="cal-day"><div class="cal-dn">${d}</div></div>`;
+    }
+  }
+  html += `</div></div>`;
+  document.getElementById('main').innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════
+function openMo(id) {
+  const {a, dest, day} = idx[id] || {};
+  if (!a) return;
+  document.getElementById('moIco').textContent = a.icon;
+  document.getElementById('moWhen').textContent = `${a.t || ''}${a.t ? ' · ' : ''}${day.dow}, ${fmtDate(day.date)} · ${dest.flag} ${dest.name}`;
+  document.getElementById('moTtl').textContent = a.name;
+  document.getElementById('moBody').innerHTML = `
+    ${a.tp ? `<div class="mo-transport">
+      <span style="font-size:22px">🧭</span>
+      <div><div class="mo-tp-lbl">Como Chegar</div><div class="mo-tp-txt">${a.tp}</div></div>
+    </div>` : ''}
+    ${a.desc ? `<div class="mo-sec"><div class="mo-sec-lbl">Sobre o Local</div><div class="mo-sec-txt">${a.desc}</div></div>` : ''}
+    ${a.tips ? `<div class="mo-tips"><span style="font-size:20px">💡</span><div class="mo-tips-in"><div class="lbl">Dicas Práticas</div><div class="txt">${a.tips}</div></div></div>` : ''}
+    ${a.cur ? `<div class="mo-cur"><span style="font-size:20px">🔮</span><div class="mo-cur-in"><div class="lbl">Curiosidade</div><div class="txt">${a.cur}</div></div></div>` : ''}
+    ${a.dur ? `<div class="mo-foot">⏱ Tempo estimado no local: ${a.dur}</div>` : ''}
+  `;
+  document.getElementById('mo').classList.add('open');
+}
+
+function closeMoOv(e) { if (e.target === document.getElementById('mo')) closeMo(); }
+function closeMo() { document.getElementById('mo').classList.remove('open'); }
+
+// ═══════════════════════════════════════
+// NAVIGATION HELPERS
+// ═══════════════════════════════════════
+function goTo(id) {
+  if (view !== 'list') { setView('list'); setTimeout(() => scrollToDest(id), 150); }
+  else scrollToDest(id);
+}
+
+function scrollToDest(id) {
+  const el = document.getElementById('d-' + id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function jumpTo(dateStr) {
+  setView('list');
+  setTimeout(() => {
+    for (const dest of D) {
+      for (const day of dest.days) {
+        if (day.date === dateStr) { scrollToDest(dest.id); return; }
+      }
+    }
+  }, 150);
+}
+
+function toggleCult(id) {
+  const p = document.getElementById('cult-' + id);
+  const a = document.getElementById('arr-' + id);
+  p.classList.toggle('open');
+  a.textContent = p.classList.contains('open') ? '▲' : '▼';
+}
+
+function fmtDate(ds) {
+  return new Date(ds + 'T12:00:00').toLocaleDateString('pt-BR', {day:'2-digit', month:'long'});
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMo(); });
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+renderSB();
+render();
+</script>
+</body>
+</html>
