@@ -5,21 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Europa · Maio 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
 :root{--bg:#f5f1ea;--surface:#fff;--sidebar:#0d0d14;--sid-txt:#b8b0a4;--txt1:#1a1712;--txt2:#5c564f;--muted:#9b948c;--border:#e5ded5;--gold:#c49a28;--gold-l:#f0dfa0;--r:12px;--sh:0 2px 20px rgba(0,0,0,.07);--shl:0 10px 50px rgba(0,0,0,.15)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt1);display:flex;min-height:100vh;font-size:14.5px;line-height:1.6}
+/* Emoji font stack para garantir exibição de bandeiras em todos os navegadores/SO */
+body{font-family:'DM Sans','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif;background:var(--bg);color:var(--txt1);display:flex;min-height:100vh;font-size:14.5px;line-height:1.6}
 
 /* ── SIDEBAR ─────────────────────────── */
-.sb{width:272px;min-width:272px;background:var(--sidebar);height:100vh;position:sticky;top:0;overflow-y:auto;display:flex;flex-direction:column;z-index:200}
-.sb-head{padding:28px 22px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb{width:272px;min-width:272px;background:var(--sidebar);height:100vh;position:sticky;top:0;overflow-y:auto;display:flex;flex-direction:column;z-index:200;transition:transform .3s ease}
+.sb-head{padding:28px 22px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .sb-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#fff;letter-spacing:.02em;line-height:1.2}
 .sb-sub{font-size:11px;color:var(--sid-txt);margin-top:5px;letter-spacing:.1em;text-transform:uppercase}
+.sb-close{display:none;width:32px;height:32px;flex-shrink:0;border:none;background:rgba(255,255,255,.1);color:#fff;border-radius:8px;font-size:17px;cursor:pointer;align-items:center;justify-content:center;margin-top:2px}
 .sb-nav{padding:10px 0;flex:1}
 .nav-item{padding:10px 22px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;gap:11px;transition:background .18s}
 .nav-item:hover{background:rgba(255,255,255,.06)}
 .nav-item.active{background:rgba(255,255,255,.09)}
-.nav-flag{font-size:18px;flex-shrink:0}
+.nav-flag{font-size:18px;flex-shrink:0;font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif}
 .nav-info{flex:1;min-width:0}
 .nav-name{font-size:12.5px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-dates{font-size:11px;color:var(--sid-txt);margin-top:1px}
@@ -27,8 +30,64 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt1);dis
 .tog{flex:1;padding:8px 6px;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.09);color:var(--sid-txt);letter-spacing:.03em}
 .tog.on{background:var(--gold);color:#fff}
 
+/* Overlay backdrop (mobile) */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:199;backdrop-filter:blur(2px)}
+.sb-overlay.active{display:block}
+
+/* ── TOPBAR (mobile only) ─────────────── */
+.topbar{display:none;position:sticky;top:0;z-index:150;background:var(--sidebar);padding:12px 18px;align-items:center;gap:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.topbar-ham{width:38px;height:38px;background:rgba(255,255,255,.1);border:none;border-radius:9px;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-info{flex:1;min-width:0}
+.topbar-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-sub{font-size:10px;color:var(--sid-txt);letter-spacing:.1em;text-transform:uppercase}
+.topbar-btns{display:flex;gap:5px;flex-shrink:0}
+.topbar-btns .tog{font-size:11px;padding:7px 10px}
+
 /* ── MAIN ────────────────────────────── */
 .main{flex:1;overflow-y:auto;min-width:0}
+
+/* ── MOBILE RESPONSIVE ───────────────── */
+@media(max-width:768px){
+  body{flex-direction:column}
+  .sb{position:fixed;left:0;top:0;height:100%;width:280px;transform:translateX(-100%);z-index:200}
+  .sb.open{transform:translateX(0)}
+  .sb-close{display:flex}
+  .topbar{display:flex}
+  .main{overflow-y:auto}
+
+  /* List view padding */
+  .lv{padding:22px 16px}
+  .dest-head{gap:12px}
+  .dest-flag{font-size:28px}
+  .dest-name{font-size:26px}
+  .dest-bar{min-height:50px}
+  .cult-grid{grid-template-columns:1fr}
+
+  /* Timeline cards */
+  .ac{padding:11px 13px;gap:10px}
+  .ac-name{font-size:13.5px}
+  .ac-tp{white-space:normal;font-size:11px}
+  .ac-time{min-width:38px;font-size:11px}
+
+  /* Calendar */
+  .cv{padding:20px 12px}
+  .cal-month{font-size:32px}
+  .cal-grid{gap:3px}
+  .cal-wd{font-size:9px;padding:4px 0}
+  .cal-day{min-height:72px;padding:6px 5px}
+  .cal-dn{font-size:11px}
+  .cal-city{font-size:8.5px}
+  .cal-ev{font-size:8px;padding:1px 4px}
+  .legend{gap:7px;padding:10px 12px}
+  .leg-item{font-size:10.5px}
+
+  /* Modal full-screen on mobile */
+  .mo{padding:0;align-items:flex-end}
+  .mo-box{border-radius:18px 18px 0 0;max-height:92vh;width:100%;max-width:100%}
+  .mo-head{padding:22px 20px 0}
+  .mo-body{padding:14px 20px 28px}
+  .mo-ttl{font-size:20px}
+}
 
 /* ── LIST VIEW ───────────────────────── */
 .lv{max-width:840px;margin:0 auto;padding:48px 38px}
@@ -129,14 +188,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt1);dis
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* Twemoji SVG sizing */
+img.emoji{height:1.2em;width:1.2em;vertical-align:-0.15em;display:inline-block}
+.dest-flag img.emoji{height:1em;width:1em;vertical-align:middle}
+.nav-flag img.emoji{height:1.1em;width:1.1em;vertical-align:middle}
+.cal-city img.emoji{height:1em;width:1em;vertical-align:middle}
+.leg-item img.emoji{height:1em;width:1em;vertical-align:middle}
 </style>
 </head>
 <body>
 
+<div class="sb-overlay" id="sbOverlay" onclick="closeSb()"></div>
+
 <nav class="sb" id="sb">
   <div class="sb-head">
-    <div class="sb-title">Europa · Maio</div>
-    <div class="sb-sub">Roteiro 2026</div>
+    <div>
+      <div class="sb-title">Europa · Maio</div>
+      <div class="sb-sub">Roteiro 2026</div>
+    </div>
+    <button class="sb-close" onclick="closeSb()">✕</button>
   </div>
   <div class="sb-nav" id="sbNav"></div>
   <div class="sb-toggle">
@@ -144,6 +214,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt1);dis
     <button class="tog" id="btnC" onclick="setView('cal')">📅 Calendário</button>
   </div>
 </nav>
+
+<div class="topbar" id="topbar">
+  <button class="topbar-ham" onclick="openSb()">☰</button>
+  <div class="topbar-info">
+    <div class="topbar-title">Europa · Maio 2026</div>
+    <div class="topbar-sub">Roteiro de viagem</div>
+  </div>
+  <div class="topbar-btns">
+    <button class="tog on" id="btnLm" onclick="setView('list')">Lista</button>
+    <button class="tog" id="btnCm" onclick="setView('cal')">Cal.</button>
+  </div>
+</div>
 
 <main class="main" id="main"></main>
 
@@ -832,8 +914,16 @@ const D = [
 ];
 
 // ═══════════════════════════════════════
-// INDEX + STATE
+// TWEMOJI — parse emojis after any DOM update
 // ═══════════════════════════════════════
+function tw(el) {
+  if (typeof twemoji !== 'undefined') {
+    twemoji.parse(el || document.body, {
+      folder: 'svg', ext: '.svg',
+      base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/'
+    });
+  }
+}
 const idx = {};
 D.forEach(dest => dest.days.forEach(day => day.att.forEach(a => { idx[a.id] = {a, dest, day}; })));
 
@@ -852,6 +942,18 @@ function renderSB() {
       </div>
     </div>`
   ).join('');
+  tw(document.getElementById('sb'));
+}
+
+function openSb() {
+  document.getElementById('sb').classList.add('open');
+  document.getElementById('sbOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeSb() {
+  document.getElementById('sb').classList.remove('open');
+  document.getElementById('sbOverlay').classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 // ═══════════════════════════════════════
@@ -861,6 +963,11 @@ function setView(v) {
   view = v;
   document.getElementById('btnL').classList.toggle('on', v === 'list');
   document.getElementById('btnC').classList.toggle('on', v === 'cal');
+  // sync mobile topbar buttons
+  const bLm = document.getElementById('btnLm');
+  const bCm = document.getElementById('btnCm');
+  if (bLm) bLm.classList.toggle('on', v === 'list');
+  if (bCm) bCm.classList.toggle('on', v === 'cal');
   render();
 }
 
@@ -872,13 +979,14 @@ function render() { view === 'list' ? renderList() : renderCal(); }
 function renderList() {
   document.getElementById('main').innerHTML =
     `<div class="lv">${D.map(renderDest).join('')}</div>`;
+  tw(document.getElementById('main'));
 }
 
 function renderDest(d) {
   return `<div class="dest-block" id="d-${d.id}">
     <div class="dest-head">
       <div class="dest-bar" style="background:${d.color}"></div>
-      <div class="dest-flag">${d.flag}</div>
+      <div class="dest-flag" style="font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif">${d.flag}</div>
       <div class="dest-info">
         <div class="dest-label">${d.country}${d.sub ? ' · ' + d.sub : ''}</div>
         <div class="dest-name">${d.name}</div>
@@ -938,14 +1046,14 @@ function renderDay(day, color) {
 function renderCal() {
   const evMap = {};
   D.forEach(dest => dest.days.forEach(day => { if (!evMap[day.date]) evMap[day.date] = {dest, day}; }));
-  const firstDay = new Date('2026-05-01').getDay(); // 4 = Thursday
+  const firstDay = 5; // 1 de Maio de 2026 = Sexta-feira (0=Dom … 5=Sex)
 
   let html = `<div class="cv">
     <div class="cal-head">
       <div class="cal-month">Maio</div>
       <div class="cal-year">2026</div>
     </div>
-    <div class="legend">${D.map(d=>`<div class="leg-item"><div class="leg-dot" style="background:${d.color}"></div><span>${d.flag} ${d.name}${d.sub?' · '+d.sub:''}</span></div>`).join('')}</div>
+    <div class="legend">${D.map(d=>`<div class="leg-item"><div class="leg-dot" style="background:${d.color}"></div><span style="font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif">${d.flag}</span> ${d.name}${d.sub?' · '+d.sub:''}</div>`).join('')}</div>
     <div class="cal-grid">
       ${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(w=>`<div class="cal-wd">${w}</div>`).join('')}
       ${''.padStart(firstDay).split('').map(()=>`<div class="cal-day empty"></div>`).join('')}`;
@@ -957,7 +1065,7 @@ function renderCal() {
       const {dest, day} = ev;
       html += `<div class="cal-day live" onclick="jumpTo('${ds}')" style="border-top:3px solid ${dest.color}">
         <div class="cal-dn">${d}</div>
-        <div class="cal-city" style="color:${dest.color}">${dest.flag} ${dest.name}</div>
+        <div class="cal-city" style="color:${dest.color};font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif">${dest.flag} ${dest.name}</div>
         ${day.att.slice(0,3).map(a=>`<div class="cal-ev" style="background:${dest.color}dd">${a.icon} ${a.name.substring(0,18)}${a.name.length>18?'…':''}</div>`).join('')}
       </div>`;
     } else {
@@ -966,6 +1074,7 @@ function renderCal() {
   }
   html += `</div></div>`;
   document.getElementById('main').innerHTML = html;
+  tw(document.getElementById('main'));
 }
 
 // ═══════════════════════════════════════
@@ -988,6 +1097,7 @@ function openMo(id) {
     ${a.dur ? `<div class="mo-foot">⏱ Tempo estimado no local: ${a.dur}</div>` : ''}
   `;
   document.getElementById('mo').classList.add('open');
+  tw(document.getElementById('mo'));
 }
 
 function closeMoOv(e) { if (e.target === document.getElementById('mo')) closeMo(); }
@@ -997,7 +1107,8 @@ function closeMo() { document.getElementById('mo').classList.remove('open'); }
 // NAVIGATION HELPERS
 // ═══════════════════════════════════════
 function goTo(id) {
-  if (view !== 'list') { setView('list'); setTimeout(() => scrollToDest(id), 150); }
+  closeSb();
+  if (view !== 'list') { setView('list'); setTimeout(() => scrollToDest(id), 200); }
   else scrollToDest(id);
 }
 
@@ -1035,6 +1146,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMo(); }
 // ═══════════════════════════════════════
 renderSB();
 render();
+// Parse emojis after initial render (Twemoji loads async)
+if (typeof twemoji !== 'undefined') { tw(); }
+else { window.addEventListener('load', () => tw()); }
 </script>
 </body>
 </html>
